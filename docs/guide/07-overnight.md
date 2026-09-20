@@ -15,7 +15,7 @@ $poteto-mode keep working overnight in a fresh worktree from <base>. Migrate eve
 The worktree keeps the run separate from other checkouts. A decision log makes the morning review shorter:
 
 ```text
-$show-me-your-work record the decisions for this run.
+$poteto-mode use the internal show-me-your-work guide to record the decisions for this run.
 ```
 
 ## Use supported lifecycle objects
@@ -38,7 +38,7 @@ Treat every child report as a claim until the parent checks the artifact.
 
 ## Configure Benny separately
 
-Benny is a polling automation pack, not an overnight shortcut. Use `$setup-benny` only when you intend to configure Slack, tracker, repository, control-adapter, and canonical-state integration.
+Benny is a polling automation pack, not an overnight shortcut. Ask `$poteto-mode` to use the internal `setup-benny` guide only when you intend to configure Slack, tracker, repository, control-adapter, and canonical-state integration.
 
 Setup does not activate Benny. It can reconcile exactly two `PAUSED` project automations only after explicit authority. A later request is required to activate them after the six canaries pass. Polling may add up to one schedule interval of latency, and overlap windows can reread events. Destination idempotency prevents duplicate effects.
 

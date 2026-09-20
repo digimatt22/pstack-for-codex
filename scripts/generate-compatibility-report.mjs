@@ -11,6 +11,19 @@ const CLASSIFICATIONS = new Set([
   "replaced",
   "provenance-only",
 ]);
+const CORE_SKILLS = new Set([
+  "create-verification-skill",
+  "how",
+  "maintain-verification-skill",
+  "poteto-mode",
+]);
+
+function derivedPathFor(upstreamPath) {
+  const match = upstreamPath.match(/^skills\/([^/]+)\/(.+)$/);
+  if (!match || CORE_SKILLS.has(match[1])) return upstreamPath;
+  const resource = match[2] === "SKILL.md" ? "guide.md" : match[2];
+  return `references/workflows/${match[1]}/${resource}`;
+}
 
 export function sha256(content) {
   return createHash("sha256").update(content).digest("hex");
@@ -53,7 +66,7 @@ function classificationFor(upstreamPath) {
       derivedPath: ".codex-plugin/plugin.json",
       preservedInvariants: [
         "pstack-for-codex identity and semantic version remain explicit",
-        "the complete skill surface remains declared",
+        "the four core entry skills remain declared",
         "license and source attribution remain discoverable",
       ],
       validations: ["manifest", "installed-plugin"],
@@ -62,7 +75,7 @@ function classificationFor(upstreamPath) {
   if (upstreamPath === "agents/comment-sicko.md") {
     return {
       classification: "adapted",
-      derivedPath: "skills/no-comments/references/comment-sicko-prompt.md",
+      derivedPath: "references/workflows/no-comments/references/comment-sicko-prompt.md",
       preservedInvariants: ["the comment-review persona remains portable and explicitly invoked"],
       validations: ["agent-template", "skill-behavior"],
     };
@@ -108,7 +121,7 @@ function classificationFor(upstreamPath) {
   }
   return {
     classification: "adapted",
-    derivedPath: upstreamPath,
+    derivedPath: derivedPathFor(upstreamPath),
     preservedInvariants: [invariant],
     validations: [validation],
   };

@@ -15,8 +15,8 @@ test("fork and upstream identities remain separate", async () => {
     readJson("package.json"),
     readJson("upstream.lock.json"),
   ]);
-  assert.equal(manifest.version, "0.2.0");
-  assert.equal(packageJson.version, "0.2.0");
+  assert.equal(manifest.version, "0.3.0");
+  assert.equal(packageJson.version, "0.3.0");
   assert.equal(lock.source.version, "0.15.1");
   assert.equal(lock.source.commit, "f8abeddd1862dc73704e3d719dd73df0d51b8c71");
   assert.equal(lock.inventory.fileCount, 158);
@@ -41,11 +41,20 @@ test("inventory accounts for every upstream file, skill, and playbook", async ()
     .sort();
   assert.equal(upstreamSkills.length, 47);
   assert.equal(records.length, EXPECTED_SKILL_COUNT);
+  assert.deepEqual(records.map((record) => record.directory).sort(), [
+    "create-verification-skill",
+    "how",
+    "maintain-verification-skill",
+    "poteto-mode",
+  ]);
+  const workflowDirectories = (await fs.readdir(path.join(root, "references", "workflows"), { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name);
   assert.deepEqual(
-    records.map((record) => record.directory).filter((name) => name !== "setup-benny").sort(),
+    [...records.map((record) => record.directory), ...workflowDirectories.filter((name) => name !== "setup-benny")].sort(),
     upstreamSkills,
   );
-  assert.equal(records.filter((record) => record.directory === "setup-benny").length, 1);
+  assert.equal(workflowDirectories.filter((name) => name === "setup-benny").length, 1);
 
   const playbooks = lock.files
     .map((entry) => entry.path.match(/^skills\/poteto-mode\/playbooks\/([^/]+)\.md$/)?.[1])
@@ -70,9 +79,22 @@ test("behavioral coverage maps all 47 upstream skills and all 23 playbooks", asy
     .sort();
   assert.deepEqual(coverage.upstream_skills.map((entry) => entry.id.slice(6)).sort(), upstreamSkills);
   assert.deepEqual(coverage.playbooks.map((entry) => entry.id.slice(9)).sort(), playbooks);
-  for (const entry of [...coverage.upstream_skills, ...coverage.playbooks]) {
+  const coreSkills = new Set(["create-verification-skill", "how", "maintain-verification-skill", "poteto-mode"]);
+  for (const entry of coverage.upstream_skills) {
     assert.equal(entry.verdict, "passed-offline-contract");
-    assert.match(entry.disposition, /explicit-only/);
+    const name = entry.id.slice(6);
+    assert.equal(entry.disposition, coreSkills.has(name) ? "explicit-only" : "on-demand-reference");
+    assert.ok(entry.positive_outcome.length > 20);
+    for (const dimension of ["workflow", "role", "authority", "evidence", "stop_condition"]) {
+      assert.equal(entry.grades[dimension], "required");
+    }
+    for (const boundary of ["authority", "capability", "negative-trigger"]) {
+      assert.ok(entry.boundaries.includes(boundary), `${entry.id} lacks ${boundary}`);
+    }
+  }
+  for (const entry of coverage.playbooks) {
+    assert.equal(entry.verdict, "passed-offline-contract");
+    assert.match(entry.disposition, /explicit-only-through-poteto-mode/);
     assert.ok(entry.positive_outcome.length > 20);
     for (const dimension of ["workflow", "role", "authority", "evidence", "stop_condition"]) {
       assert.equal(entry.grades[dimension], "required");

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { resolveModelPolicy } from "../skills/setup-pstack/scripts/manage-agents.mjs";
+import { resolveModelPolicy } from "../references/workflows/setup-pstack/scripts/manage-agents.mjs";
 
 test("unobservable model inventory inherits and labels the requested pair unverified", () => {
   const result = resolveModelPolicy({

@@ -7,7 +7,7 @@ This tutorial installs the plugin, checks skill discovery, and runs one represen
 Install the marketplace directly from the public GitHub repository:
 
 ```bash
-codex plugin marketplace add Aqua-123/pstack-for-codex
+codex plugin marketplace add digimatt22/pstack-for-codex
 codex plugin add pstack-for-codex@pstack-for-codex-local
 codex plugin list --json
 ```
@@ -31,7 +31,7 @@ Codex resolves `$how` to the installed `pstack-for-codex` namespace. The respons
 The plugin works without custom profiles. To add them, run:
 
 ```text
-$setup-pstack install the pstack agents for this project.
+$poteto-mode use the internal setup-pstack guide to install the pstack agents for this project.
 ```
 
 Choose `project` or `user` scope when asked. Project scope writes `.codex/agents/*.toml`. User scope writes `~/.codex/agents/*.toml`. Setup scans both locations for duplicate agent names and refuses to overwrite unowned files.
@@ -42,12 +42,12 @@ The result includes the written paths, receipt path, hashes, and configuration s
 
 ## Remove or upgrade owned profiles
 
-Invoke `$setup-pstack` with an explicit action and scope:
+Invoke `$poteto-mode` with an explicit setup action and scope:
 
 ```text
-$setup-pstack inspect the project profiles and their receipt.
-$setup-pstack upgrade the project profiles.
-$setup-pstack uninstall the project profiles.
+$poteto-mode use the internal setup-pstack guide to inspect the project profiles and their receipt.
+$poteto-mode use the internal setup-pstack guide to upgrade the project profiles.
+$poteto-mode use the internal setup-pstack guide to uninstall the project profiles.
 ```
 
 Upgrade and uninstall touch only receipted files whose current hashes still match. A changed or relocated file produces `review-required` and remains untouched.

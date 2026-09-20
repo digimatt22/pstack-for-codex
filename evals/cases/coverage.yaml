@@ -3,50 +3,83 @@
   "upstream_skills": [
     {
       "id": "skill:make-bot-ui",
-      "kind": "skill",
-      "source": "skills/make-bot-ui/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/make-bot-ui/guide.md",
       "case": "skill-positive:make-bot-ui",
-      "positive_outcome": "Explicit $make-bot-ui invocation selects the documented Codex workflow and produces its named artifact or decision.",
-      "boundaries": ["explicit-only", "authority", "capability", "negative-trigger"],
-      "disposition": "explicit-only",
-      "verdict": "passed-offline-contract",
-      "grades": {"workflow": "required", "role": "required", "authority": "required", "evidence": "required", "stop_condition": "required"}
-    },
-    {
-      "id": "skill:principle-attack-the-premise",
-      "kind": "skill",
-      "source": "skills/principle-attack-the-premise/SKILL.md",
-      "case": "skill-positive:principle-attack-the-premise",
-      "positive_outcome": "Explicit $principle-attack-the-premise invocation selects the documented Codex workflow and produces its named artifact or decision.",
-      "boundaries": ["explicit-only", "authority", "capability", "negative-trigger"],
-      "disposition": "explicit-only",
-      "verdict": "passed-offline-contract",
-      "grades": {"workflow": "required", "role": "required", "authority": "required", "evidence": "required", "stop_condition": "required"}
-    },
-    {
-      "id": "skill:principle-test-behavior-not-implementation",
-      "kind": "skill",
-      "source": "skills/principle-test-behavior-not-implementation/SKILL.md",
-      "case": "skill-positive:principle-test-behavior-not-implementation",
-      "positive_outcome": "Explicit $principle-test-behavior-not-implementation invocation selects the documented Codex workflow and produces its named artifact or decision.",
-      "boundaries": ["explicit-only", "authority", "capability", "negative-trigger"],
-      "disposition": "explicit-only",
-      "verdict": "passed-offline-contract",
-      "grades": {"workflow": "required", "role": "required", "authority": "required", "evidence": "required", "stop_condition": "required"}
-    },
-    {
-      "id": "skill:architect",
-      "kind": "skill",
-      "source": "skills/architect/SKILL.md",
-      "case": "skill-positive:architect",
-      "positive_outcome": "Explicit $architect invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal make-bot-ui guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
+      "verdict": "passed-offline-contract",
+      "grades": {
+        "workflow": "required",
+        "role": "required",
+        "authority": "required",
+        "evidence": "required",
+        "stop_condition": "required"
+      }
+    },
+    {
+      "id": "skill:principle-attack-the-premise",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-attack-the-premise/guide.md",
+      "case": "skill-positive:principle-attack-the-premise",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-attack-the-premise guide only when its documented workflow is needed.",
+      "boundaries": [
+        "on-demand-reference",
+        "authority",
+        "capability",
+        "negative-trigger"
+      ],
+      "disposition": "on-demand-reference",
+      "verdict": "passed-offline-contract",
+      "grades": {
+        "workflow": "required",
+        "role": "required",
+        "authority": "required",
+        "evidence": "required",
+        "stop_condition": "required"
+      }
+    },
+    {
+      "id": "skill:principle-test-behavior-not-implementation",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-test-behavior-not-implementation/guide.md",
+      "case": "skill-positive:principle-test-behavior-not-implementation",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-test-behavior-not-implementation guide only when its documented workflow is needed.",
+      "boundaries": [
+        "on-demand-reference",
+        "authority",
+        "capability",
+        "negative-trigger"
+      ],
+      "disposition": "on-demand-reference",
+      "verdict": "passed-offline-contract",
+      "grades": {
+        "workflow": "required",
+        "role": "required",
+        "authority": "required",
+        "evidence": "required",
+        "stop_condition": "required"
+      }
+    },
+    {
+      "id": "skill:architect",
+      "kind": "internal-reference",
+      "source": "references/workflows/architect/guide.md",
+      "case": "skill-positive:architect",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal architect guide only when its documented workflow is needed.",
+      "boundaries": [
+        "on-demand-reference",
+        "authority",
+        "capability",
+        "negative-trigger"
+      ],
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -58,17 +91,17 @@
     },
     {
       "id": "skill:arena",
-      "kind": "skill",
-      "source": "skills/arena/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/arena/guide.md",
       "case": "skill-positive:arena",
-      "positive_outcome": "Explicit $arena invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal arena guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -80,17 +113,17 @@
     },
     {
       "id": "skill:automate-me",
-      "kind": "skill",
-      "source": "skills/automate-me/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/automate-me/guide.md",
       "case": "skill-positive:automate-me",
-      "positive_outcome": "Explicit $automate-me invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal automate-me guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -102,17 +135,17 @@
     },
     {
       "id": "skill:blast-radius",
-      "kind": "skill",
-      "source": "skills/blast-radius/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/blast-radius/guide.md",
       "case": "skill-positive:blast-radius",
-      "positive_outcome": "Explicit $blast-radius invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal blast-radius guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -124,17 +157,17 @@
     },
     {
       "id": "skill:bro",
-      "kind": "skill",
-      "source": "skills/bro/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/bro/guide.md",
       "case": "skill-positive:bro",
-      "positive_outcome": "Explicit $bro invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal bro guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -168,17 +201,17 @@
     },
     {
       "id": "skill:figure-it-out",
-      "kind": "skill",
-      "source": "skills/figure-it-out/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/figure-it-out/guide.md",
       "case": "skill-positive:figure-it-out",
-      "positive_outcome": "Explicit $figure-it-out invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal figure-it-out guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -212,17 +245,17 @@
     },
     {
       "id": "skill:interrogate",
-      "kind": "skill",
-      "source": "skills/interrogate/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/interrogate/guide.md",
       "case": "skill-positive:interrogate",
-      "positive_outcome": "Explicit $interrogate invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal interrogate guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -256,17 +289,17 @@
     },
     {
       "id": "skill:no-comments",
-      "kind": "skill",
-      "source": "skills/no-comments/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/no-comments/guide.md",
       "case": "skill-positive:no-comments",
-      "positive_outcome": "Explicit $no-comments invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal no-comments guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -300,17 +333,17 @@
     },
     {
       "id": "skill:principle-boundary-discipline",
-      "kind": "skill",
-      "source": "skills/principle-boundary-discipline/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-boundary-discipline/guide.md",
       "case": "skill-positive:principle-boundary-discipline",
-      "positive_outcome": "Explicit $principle-boundary-discipline invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-boundary-discipline guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -322,17 +355,17 @@
     },
     {
       "id": "skill:principle-build-the-lever",
-      "kind": "skill",
-      "source": "skills/principle-build-the-lever/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-build-the-lever/guide.md",
       "case": "skill-positive:principle-build-the-lever",
-      "positive_outcome": "Explicit $principle-build-the-lever invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-build-the-lever guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -344,17 +377,17 @@
     },
     {
       "id": "skill:principle-encode-lessons-in-structure",
-      "kind": "skill",
-      "source": "skills/principle-encode-lessons-in-structure/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-encode-lessons-in-structure/guide.md",
       "case": "skill-positive:principle-encode-lessons-in-structure",
-      "positive_outcome": "Explicit $principle-encode-lessons-in-structure invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-encode-lessons-in-structure guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -366,17 +399,17 @@
     },
     {
       "id": "skill:principle-exhaust-the-design-space",
-      "kind": "skill",
-      "source": "skills/principle-exhaust-the-design-space/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-exhaust-the-design-space/guide.md",
       "case": "skill-positive:principle-exhaust-the-design-space",
-      "positive_outcome": "Explicit $principle-exhaust-the-design-space invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-exhaust-the-design-space guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -388,17 +421,17 @@
     },
     {
       "id": "skill:principle-experience-first",
-      "kind": "skill",
-      "source": "skills/principle-experience-first/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-experience-first/guide.md",
       "case": "skill-positive:principle-experience-first",
-      "positive_outcome": "Explicit $principle-experience-first invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-experience-first guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -410,17 +443,17 @@
     },
     {
       "id": "skill:principle-fix-root-causes",
-      "kind": "skill",
-      "source": "skills/principle-fix-root-causes/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-fix-root-causes/guide.md",
       "case": "skill-positive:principle-fix-root-causes",
-      "positive_outcome": "Explicit $principle-fix-root-causes invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-fix-root-causes guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -432,17 +465,17 @@
     },
     {
       "id": "skill:principle-foundational-thinking",
-      "kind": "skill",
-      "source": "skills/principle-foundational-thinking/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-foundational-thinking/guide.md",
       "case": "skill-positive:principle-foundational-thinking",
-      "positive_outcome": "Explicit $principle-foundational-thinking invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-foundational-thinking guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -454,17 +487,17 @@
     },
     {
       "id": "skill:principle-guard-the-context-window",
-      "kind": "skill",
-      "source": "skills/principle-guard-the-context-window/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-guard-the-context-window/guide.md",
       "case": "skill-positive:principle-guard-the-context-window",
-      "positive_outcome": "Explicit $principle-guard-the-context-window invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-guard-the-context-window guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -476,17 +509,17 @@
     },
     {
       "id": "skill:principle-laziness-protocol",
-      "kind": "skill",
-      "source": "skills/principle-laziness-protocol/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-laziness-protocol/guide.md",
       "case": "skill-positive:principle-laziness-protocol",
-      "positive_outcome": "Explicit $principle-laziness-protocol invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-laziness-protocol guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -498,17 +531,17 @@
     },
     {
       "id": "skill:principle-make-operations-idempotent",
-      "kind": "skill",
-      "source": "skills/principle-make-operations-idempotent/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-make-operations-idempotent/guide.md",
       "case": "skill-positive:principle-make-operations-idempotent",
-      "positive_outcome": "Explicit $principle-make-operations-idempotent invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-make-operations-idempotent guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -520,17 +553,17 @@
     },
     {
       "id": "skill:principle-migrate-callers-then-delete-legacy-apis",
-      "kind": "skill",
-      "source": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-migrate-callers-then-delete-legacy-apis/guide.md",
       "case": "skill-positive:principle-migrate-callers-then-delete-legacy-apis",
-      "positive_outcome": "Explicit $principle-migrate-callers-then-delete-legacy-apis invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-migrate-callers-then-delete-legacy-apis guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -542,17 +575,17 @@
     },
     {
       "id": "skill:principle-minimize-reader-load",
-      "kind": "skill",
-      "source": "skills/principle-minimize-reader-load/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-minimize-reader-load/guide.md",
       "case": "skill-positive:principle-minimize-reader-load",
-      "positive_outcome": "Explicit $principle-minimize-reader-load invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-minimize-reader-load guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -564,17 +597,17 @@
     },
     {
       "id": "skill:principle-model-the-domain",
-      "kind": "skill",
-      "source": "skills/principle-model-the-domain/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-model-the-domain/guide.md",
       "case": "skill-positive:principle-model-the-domain",
-      "positive_outcome": "Explicit $principle-model-the-domain invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-model-the-domain guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -586,17 +619,17 @@
     },
     {
       "id": "skill:principle-never-block-on-the-human",
-      "kind": "skill",
-      "source": "skills/principle-never-block-on-the-human/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-never-block-on-the-human/guide.md",
       "case": "skill-positive:principle-never-block-on-the-human",
-      "positive_outcome": "Explicit $principle-never-block-on-the-human invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-never-block-on-the-human guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -608,17 +641,17 @@
     },
     {
       "id": "skill:principle-outcome-oriented-execution",
-      "kind": "skill",
-      "source": "skills/principle-outcome-oriented-execution/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-outcome-oriented-execution/guide.md",
       "case": "skill-positive:principle-outcome-oriented-execution",
-      "positive_outcome": "Explicit $principle-outcome-oriented-execution invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-outcome-oriented-execution guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -630,17 +663,17 @@
     },
     {
       "id": "skill:principle-prove-it-works",
-      "kind": "skill",
-      "source": "skills/principle-prove-it-works/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-prove-it-works/guide.md",
       "case": "skill-positive:principle-prove-it-works",
-      "positive_outcome": "Explicit $principle-prove-it-works invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-prove-it-works guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -652,17 +685,17 @@
     },
     {
       "id": "skill:principle-redesign-from-first-principles",
-      "kind": "skill",
-      "source": "skills/principle-redesign-from-first-principles/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-redesign-from-first-principles/guide.md",
       "case": "skill-positive:principle-redesign-from-first-principles",
-      "positive_outcome": "Explicit $principle-redesign-from-first-principles invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-redesign-from-first-principles guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -674,17 +707,17 @@
     },
     {
       "id": "skill:principle-separate-before-serializing-shared-state",
-      "kind": "skill",
-      "source": "skills/principle-separate-before-serializing-shared-state/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-separate-before-serializing-shared-state/guide.md",
       "case": "skill-positive:principle-separate-before-serializing-shared-state",
-      "positive_outcome": "Explicit $principle-separate-before-serializing-shared-state invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-separate-before-serializing-shared-state guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -696,17 +729,17 @@
     },
     {
       "id": "skill:principle-sequence-verifiable-units",
-      "kind": "skill",
-      "source": "skills/principle-sequence-verifiable-units/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-sequence-verifiable-units/guide.md",
       "case": "skill-positive:principle-sequence-verifiable-units",
-      "positive_outcome": "Explicit $principle-sequence-verifiable-units invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-sequence-verifiable-units guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -718,17 +751,17 @@
     },
     {
       "id": "skill:principle-subtract-before-you-add",
-      "kind": "skill",
-      "source": "skills/principle-subtract-before-you-add/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-subtract-before-you-add/guide.md",
       "case": "skill-positive:principle-subtract-before-you-add",
-      "positive_outcome": "Explicit $principle-subtract-before-you-add invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-subtract-before-you-add guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -740,17 +773,17 @@
     },
     {
       "id": "skill:principle-type-system-discipline",
-      "kind": "skill",
-      "source": "skills/principle-type-system-discipline/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/principle-type-system-discipline/guide.md",
       "case": "skill-positive:principle-type-system-discipline",
-      "positive_outcome": "Explicit $principle-type-system-discipline invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal principle-type-system-discipline guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -762,17 +795,17 @@
     },
     {
       "id": "skill:recall",
-      "kind": "skill",
-      "source": "skills/recall/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/recall/guide.md",
       "case": "skill-positive:recall",
-      "positive_outcome": "Explicit $recall invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal recall guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -784,17 +817,17 @@
     },
     {
       "id": "skill:reflect",
-      "kind": "skill",
-      "source": "skills/reflect/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/reflect/guide.md",
       "case": "skill-positive:reflect",
-      "positive_outcome": "Explicit $reflect invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal reflect guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -806,17 +839,17 @@
     },
     {
       "id": "skill:setup-pstack",
-      "kind": "skill",
-      "source": "skills/setup-pstack/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/setup-pstack/guide.md",
       "case": "skill-positive:setup-pstack",
-      "positive_outcome": "Explicit $setup-pstack invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal setup-pstack guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -828,17 +861,17 @@
     },
     {
       "id": "skill:show-me-your-work",
-      "kind": "skill",
-      "source": "skills/show-me-your-work/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/show-me-your-work/guide.md",
       "case": "skill-positive:show-me-your-work",
-      "positive_outcome": "Explicit $show-me-your-work invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal show-me-your-work guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -850,17 +883,17 @@
     },
     {
       "id": "skill:swarm",
-      "kind": "skill",
-      "source": "skills/swarm/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/swarm/guide.md",
       "case": "skill-positive:swarm",
-      "positive_outcome": "Explicit $swarm invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal swarm guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -872,17 +905,17 @@
     },
     {
       "id": "skill:tdd",
-      "kind": "skill",
-      "source": "skills/tdd/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/tdd/guide.md",
       "case": "skill-positive:tdd",
-      "positive_outcome": "Explicit $tdd invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal tdd guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -894,17 +927,17 @@
     },
     {
       "id": "skill:teach",
-      "kind": "skill",
-      "source": "skills/teach/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/teach/guide.md",
       "case": "skill-positive:teach",
-      "positive_outcome": "Explicit $teach invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal teach guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -916,17 +949,17 @@
     },
     {
       "id": "skill:technical-writing",
-      "kind": "skill",
-      "source": "skills/technical-writing/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/technical-writing/guide.md",
       "case": "skill-positive:technical-writing",
-      "positive_outcome": "Explicit $technical-writing invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal technical-writing guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -938,17 +971,17 @@
     },
     {
       "id": "skill:typescript-best-practices",
-      "kind": "skill",
-      "source": "skills/typescript-best-practices/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/typescript-best-practices/guide.md",
       "case": "skill-positive:typescript-best-practices",
-      "positive_outcome": "Explicit $typescript-best-practices invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal typescript-best-practices guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -960,17 +993,17 @@
     },
     {
       "id": "skill:unslop",
-      "kind": "skill",
-      "source": "skills/unslop/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/unslop/guide.md",
       "case": "skill-positive:unslop",
-      "positive_outcome": "Explicit $unslop invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal unslop guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",
@@ -982,17 +1015,17 @@
     },
     {
       "id": "skill:why",
-      "kind": "skill",
-      "source": "skills/why/SKILL.md",
+      "kind": "internal-reference",
+      "source": "references/workflows/why/guide.md",
       "case": "skill-positive:why",
-      "positive_outcome": "Explicit $why invocation selects the documented Codex workflow and produces its named artifact or decision.",
+      "positive_outcome": "Explicit $poteto-mode routing loads the internal why guide only when its documented workflow is needed.",
       "boundaries": [
-        "explicit-only",
+        "on-demand-reference",
         "authority",
         "capability",
         "negative-trigger"
       ],
-      "disposition": "explicit-only",
+      "disposition": "on-demand-reference",
       "verdict": "passed-offline-contract",
       "grades": {
         "workflow": "required",

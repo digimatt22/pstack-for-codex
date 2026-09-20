@@ -26,7 +26,7 @@ Use `$maintain-verification-skill` to compare an existing verification skill wit
 
 ## Review the diff
 
-Run the repository checks, inspect `git diff --check`, and use `$interrogate` for a skeptical review when the risk warrants it. Keep unsupported or trust-dependent checks visible as blockers or deferred operator gates.
+Run the repository checks, inspect `git diff --check`, and ask `$poteto-mode` to use the internal `interrogate` guide for a skeptical review when the risk warrants it. Keep unsupported or trust-dependent checks visible as blockers or deferred operator gates.
 
 ## Open or merge only with authority
 

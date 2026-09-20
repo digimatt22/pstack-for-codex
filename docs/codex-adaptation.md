@@ -4,9 +4,9 @@ This document explains how the upstream pstack workflows map to Codex. It descri
 
 ## Skill registration
 
-The plugin manifest is [`.codex-plugin/plugin.json`](../.codex-plugin/plugin.json). The local marketplace manifest is [`.agents/plugins/marketplace.json`](../.agents/plugins/marketplace.json). Codex discovers 48 skills under `skills/`. Each skill has `agents/openai.yaml` metadata and sets `allow_implicit_invocation: false`.
+The plugin manifest is [`.codex-plugin/plugin.json`](../.codex-plugin/plugin.json). The local marketplace manifest is [`.agents/plugins/marketplace.json`](../.agents/plugins/marketplace.json). Codex discovers four skills under `skills/`. Each has `agents/openai.yaml` metadata and sets `allow_implicit_invocation: false`.
 
-Installed identities use the plugin namespace. Prompts use the explicit `$skill-name` form. Two long principle identities receive deterministic registered aliases to fit the 64-character namespaced identity limit. No skill is dropped.
+Installed identities use the plugin namespace. Prompts use the explicit `$skill-name` form. The remaining workflows and principles live under [`references/workflows/`](../references/workflows/README.md) and load only after a core skill routes to them.
 
 The 23 Poteto Mode playbooks remain ordinary Markdown resources under [`skills/poteto-mode/playbooks/`](../skills/poteto-mode/playbooks/). They are not independently registered skills.
 
@@ -25,9 +25,9 @@ The upstream personas became portable prompts plus optional Codex TOML profiles:
 | Role | Portable prompt | Optional profile |
 |---|---|---|
 | Poteto implementation | [`poteto-agent-prompt.md`](../skills/poteto-mode/references/poteto-agent-prompt.md) | `pstack-poteto-agent` |
-| Comment review | [`comment-sicko-prompt.md`](../skills/no-comments/references/comment-sicko-prompt.md) | `pstack-comment-sicko` |
+| Comment review | [`comment-sicko-prompt.md`](../references/workflows/no-comments/references/comment-sicko-prompt.md) | `pstack-comment-sicko` |
 
-`$setup-pstack` installs profiles at project or user scope. Its receipt records hashes and ownership. Upgrade and uninstall refuse a hash mismatch or duplicate agent name.
+The internal `setup-pstack` guide installs profiles at project or user scope when `$poteto-mode` routes to it. Its receipt records hashes and ownership. Upgrade and uninstall refuse a hash mismatch or duplicate agent name.
 
 A configured model is a request, not runtime evidence. Setup validates a `model` and `reasoning_effort` pair only against a supported live model list. When that list is unavailable, the profile inherits the parent and the receipt records `unverified-inheritance`. Runtime reports identify the served model only when a supported surface exposes it.
 
@@ -59,7 +59,7 @@ When Bun is unavailable, validation reports the missing capability. A workflow t
 
 ## Benny automation pack
 
-Benny is source-managed under [`automations/benny/`](../automations/benny/). Only `$setup-benny` is a registered skill. The operational skill files are copied cron instructions.
+Benny is source-managed under [`automations/benny/`](../automations/benny/). Its setup workflow is an internal reference. The operational skill files are copied cron instructions.
 
 The adaptation replaces event assumptions with bounded polling. Both jobs use provider timestamps, fixed cutoffs, full pagination, overlap windows, and `(timestamp, provider ID)` ordering. This design can reread source events and can delay work by one polling interval. Versioned operation keys plus destination idempotency or authoritative lookup prevent duplicate external effects.
 

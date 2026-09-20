@@ -4,7 +4,7 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { installAgents, scanAgentNames } from "../skills/setup-pstack/scripts/manage-agents.mjs";
+import { installAgents, scanAgentNames } from "../references/workflows/setup-pstack/scripts/manage-agents.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -23,7 +23,7 @@ test("portable prompt assets replace the legacy top-level personas", async () =>
   await assert.rejects(fs.stat(path.join(root, "agents/comment-sicko.md")), { code: "ENOENT" });
 
   const poteto = await fs.readFile(path.join(root, "skills/poteto-mode/references/poteto-agent-prompt.md"), "utf8");
-  const comments = await fs.readFile(path.join(root, "skills/no-comments/references/comment-sicko-prompt.md"), "utf8");
+  const comments = await fs.readFile(path.join(root, "references/workflows/no-comments/references/comment-sicko-prompt.md"), "utf8");
   assert.match(poteto, /Read the `poteto-mode` skill's `SKILL\.md` in full/);
   assert.match(comments, /Yes\.\.\. Ha ha ha\.\.\. Yes!/);
 });

@@ -7,19 +7,19 @@ Copy these prompts, then replace the nouns and finish conditions with your own.
 ## Understand a subsystem
 
 ```text
-$how trace cancellation from the API to the worker. Then use $why to explain the retry limit from available history.
+$how trace cancellation from the API to the worker. Then use the internal why guide to explain the retry limit from available history.
 ```
 
 ## Compare a design
 
 ```text
-$arena compare three isolated designs for this state machine. Judge them on illegal-state prevention, caller migration, and operational evidence. Do not edit production code.
+$poteto-mode use the internal arena guide to compare three isolated designs for this state machine. Judge them on illegal-state prevention, caller migration, and operational evidence. Do not edit production code.
 ```
 
 ## Review a branch
 
 ```text
-$interrogate review this branch against its stated intent. Report actionable findings with file evidence and explain every dismissal.
+$poteto-mode use the internal interrogate guide to review this branch against its stated intent. Report actionable findings with file evidence and explain every dismissal.
 ```
 
 ## Fix a bug
@@ -31,18 +31,18 @@ $poteto-mode reproduce the duplicate retry row, add the narrow regression check,
 ## Run bounded parallel checks
 
 ```text
-$swarm inspect each package for direct legacy-client calls. Keep the workers read-only and return one deduplicated report.
+$poteto-mode use the internal swarm guide to inspect each package for direct legacy-client calls. Keep the workers read-only and return one deduplicated report.
 ```
 
 ## Configure dormant polling
 
 ```text
-$setup-benny inspect the dormant Benny pack and list every activation blocker. Do not create automations or write externally.
+$poteto-mode use the internal setup-benny guide to inspect the dormant Benny pack and list every activation blocker. Do not create automations or write externally.
 ```
 
 ## Avoid these mistakes
 
-- Do not use slash-command syntax. Invoke installed skills as `$skill-name`.
+- Do not use slash-command syntax. Invoke one of the four installed skills as `$skill-name`; ask it to route to narrower internal guides.
 - Do not assume that Poteto Mode persists. Without a trusted hook receipt, invoke it again on each turn.
 - Do not send parallel writers into one checkout. Assign exclusive paths or separate worktrees.
 - Do not claim model diversity from a requested profile. Report the served model only when a supported live surface exposes it.

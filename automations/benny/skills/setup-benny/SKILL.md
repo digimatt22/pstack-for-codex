@@ -5,7 +5,7 @@ description: Direct instructions for validating a copied Benny pack. This file i
 
 # Validate the copied Benny pack
 
-Use the registered `$setup-benny` skill as the authority. Confirm this file is at `.codex/automations/benny/skills/setup-benny/SKILL.md`, configuration is outside the copied pack under `.codex/benny/`, and mutable state is in one absolute, shared, owner-only canonical directory outside all worktrees.
+Use the plugin's internal `setup-benny` guide, routed through `$poteto-mode`, as the authority. Confirm this file is at `.codex/automations/benny/skills/setup-benny/SKILL.md`, configuration is outside the copied pack under `.codex/benny/`, and mutable state is in one absolute, shared, owner-only canonical directory outside all worktrees.
 
 Validate every field in `../../templates/configuration.example.yaml`. Credential entries are external references only. Record least-privilege scopes, config and operational-file hashes, source-managed file hashes, atomic-state proof, allowed network hosts, retention, canaries, stable automation IDs, and activation blockers in `.codex/benny/setup-receipt.json` without secret values.
 

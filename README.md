@@ -1,6 +1,6 @@
 # pstack for Codex
 
-`pstack-for-codex` is a Codex-native derivative of [pstack](https://github.com/cursor/plugins/tree/main/pstack). It packages deliberate engineering workflows as 48 explicit-only skills and 23 Poteto Mode playbooks.
+`pstack-for-codex` is a Codex-native derivative of [pstack](https://github.com/cursor/plugins/tree/main/pstack). It exposes four lightweight entry skills. Narrower workflows and principles load as references only when a core skill routes to them.
 
 Use `$poteto-mode` for a substantial engineering task. It selects a playbook, records the work as verifiable steps, and invokes narrower skills when the steps need them. The parent task keeps authority for integration, external writes, commits, pushes, and the final result.
 
@@ -9,11 +9,11 @@ Use `$poteto-mode` for a substantial engineering task. It selects a playbook, re
 This public repository is a Codex marketplace. Install it directly from GitHub:
 
 ```bash
-codex plugin marketplace add Aqua-123/pstack-for-codex
+codex plugin marketplace add digimatt22/pstack-for-codex
 codex plugin add pstack-for-codex@pstack-for-codex-local
 ```
 
-For a local checkout, replace `Aqua-123/pstack-for-codex` with its absolute path. Confirm the installed plugin:
+For a local checkout, replace `digimatt22/pstack-for-codex` with its absolute path. Confirm the installed plugin:
 
 ```bash
 codex plugin list --json
@@ -21,7 +21,7 @@ codex plugin list --json
 
 Codex CLI `0.153.4` does not expose an offline runtime skill-index command. The release suite validates the skill catalog from the installed artifact; start a new task to exercise prompt-time skill discovery.
 
-All 48 skills require explicit invocation. Codex stores their full identities under the `pstack-for-codex` namespace. In a prompt, invoke a skill with its registered `$name`:
+The four entry skills require explicit invocation. Codex stores their identities under the `pstack-for-codex` namespace. In a prompt, invoke a skill with its registered `$name`:
 
 ```text
 $poteto-mode add a --json flag to this command. Keep text output byte-identical. Verify both modes.
@@ -31,7 +31,7 @@ Start a new task after installation so Codex reloads the plugin catalog. See [Se
 
 ## Optional agent profiles
 
-The skills work without custom agent profiles. Use `$setup-pstack` only when you want to install the two optional profiles:
+The skills work without custom agent profiles. Ask `$poteto-mode` to use its internal `setup-pstack` guide only when you want to install the two optional profiles:
 
 - `pstack-poteto-agent` for implementation and orchestration.
 - `pstack-comment-sicko` for read-only comment review.
@@ -48,25 +48,15 @@ Read [Agent setup and model evidence](./docs/codex-adaptation.md#agent-setup-and
 $poteto-mode this retry path creates duplicate rows. Reproduce it first, fix the root cause, and verify the real behavior.
 ```
 
-The other skills are useful when you want one specific operation:
+The other registered entry points are:
 
 | Skill | Use it for |
 |---|---|
 | [`$how`](./skills/how/SKILL.md) | Trace how a subsystem works. |
-| [`$why`](./skills/why/SKILL.md) | Reconstruct why code reached its current shape from available evidence. |
-| [`$recall`](./skills/recall/SKILL.md) | Rebuild recent project context through supported task history and live state. |
-| [`$architect`](./skills/architect/SKILL.md) | Settle types, callers, and module boundaries before implementation. |
-| [`$arena`](./skills/arena/SKILL.md) | Compare isolated attempts at the same brief. |
-| [`$swarm`](./skills/swarm/SKILL.md) | Cover independent slices or races and aggregate the result. |
-| [`$interrogate`](./skills/interrogate/SKILL.md) | Run a skeptical, multi-lens review of a diff. |
-| [`$tdd`](./skills/tdd/SKILL.md) | Reproduce a bug with a failing test before fixing it. |
-| [`$no-comments`](./skills/no-comments/SKILL.md) | Review comments and remove ones that do not earn their place. |
-| [`$unslop`](./skills/unslop/SKILL.md) | Remove vague or machine-shaped prose. |
-| [`$show-me-your-work`](./skills/show-me-your-work/SKILL.md) | Keep a reviewable `decisions.tsv` trail. |
-| [`$setup-benny`](./skills/setup-benny/SKILL.md) | Inspect or configure the dormant Benny polling pack. |
-| [`$make-bot-ui`](./skills/make-bot-ui/SKILL.md) | Build a local UI for an authenticated user-owned webhook. |
+| [`$create-verification-skill`](./skills/create-verification-skill/SKILL.md) | Add a project-local way to prove real behavior. |
+| [`$maintain-verification-skill`](./skills/maintain-verification-skill/SKILL.md) | Audit and refresh an existing verification skill. |
 
-Browse the [complete skill directory](./skills/) or read the [pstack guide](./docs/guide/README.md).
+The [internal workflow index](./references/workflows/README.md) preserves the full PStack toolkit without registering every guide globally. Invoke a core skill rather than naming an internal guide as `$skill`. Read the [pstack guide](./docs/guide/README.md) for examples.
 
 ## Runtime boundaries
 
@@ -80,7 +70,7 @@ Optional connectors and control tools are detected at run time. A missing capabi
 
 ## Benny stays paused
 
-[Benny](./automations/benny/README.md) is an optional polling pack for issue triage and reproduction. Installation does not create or activate an automation. `$setup-benny` copies the pack into a target project only after explicit authority.
+[Benny](./automations/benny/README.md) is an optional polling pack for issue triage and reproduction. Installation does not create or activate an automation. The internal `setup-benny` guide copies the pack into a target project only after explicit authority when `$poteto-mode` routes to it.
 
 The two stable automation names are `pstack-benny-triage` and `pstack-benny-reproduce`. Setup creates or updates them only when the user asks, and it leaves both `PAUSED`. Activation needs a separate request after all six canaries pass. Polling is not event delivery, so work can begin up to one schedule interval after a source change.
 
@@ -116,13 +106,13 @@ codex plugin remove pstack-for-codex@pstack-for-codex-local
 codex plugin marketplace remove pstack-for-codex-local
 ```
 
-Plugin removal does not delete project or user files created by `$setup-pstack` or `$setup-benny`. Use those skills to inspect receipts and remove only unchanged, owned files. Benny configuration and mutable state survive uninstall unless the user separately authorizes a purge.
+Plugin removal does not delete project or user files created through the internal `setup-pstack` or `setup-benny` guides. Use `$poteto-mode` to route to those guides, inspect receipts, and remove only unchanged, owned files. Benny configuration and mutable state survive uninstall unless the user separately authorizes a purge.
 
 ## Origin and maintenance
 
-This repository contains only the modified Codex version. It does not publish a raw upstream branch or snapshot commit, and the delivered checkout does not keep an upstream remote.
+This repository is the maintained `digimatt22` fork of `Aqua-123/pstack-for-codex`. A maintainer checkout should keep `origin` pointed at this fork and `upstream` pointed at the author repository so upstream changes can be reviewed and merged deliberately.
 
-[NOTICE](./NOTICE), [`upstream.lock.json`](./upstream.lock.json), and the [compatibility map](./compatibility/pstack-map.json) record the source commit, license, file hashes, and migration status. [UPSTREAM.md](./UPSTREAM.md) explains how maintainers refresh that evidence through a temporary local source checkout.
+[NOTICE](./NOTICE), [`upstream.lock.json`](./upstream.lock.json), and the [compatibility map](./compatibility/pstack-map.json) separately track the original Cursor PStack source. [UPSTREAM.md](./UPSTREAM.md) explains both update paths.
 
 See [Codex adaptation notes](./docs/codex-adaptation.md) for the behavioral changes and current limits.
 

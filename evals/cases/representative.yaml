@@ -28,7 +28,7 @@
     {
       "id": "incomplete-architect",
       "category": "incomplete-input",
-      "input": "$architect design it",
+      "input": "$poteto-mode use the internal architect guide to design it",
       "expected": {
         "workflow": "architect asks only for material missing scope",
         "role": "design lead",
@@ -52,7 +52,7 @@
     {
       "id": "unsupported-heartbeat",
       "category": "unsupported-action",
-      "input": "$automate-me monitor a service without lifecycle tools",
+      "input": "$poteto-mode use the internal automate-me guide to monitor a service without lifecycle tools",
       "expected": {
         "workflow": "automate-me capability fallback",
         "role": "parent",
@@ -64,7 +64,7 @@
     {
       "id": "setup-teardown",
       "category": "setup",
-      "input": "$setup-pstack project scope, then uninstall",
+      "input": "$poteto-mode use the internal setup-pstack guide for project scope, then uninstall",
       "expected": {
         "workflow": "receipt-owned agent setup",
         "role": "setup helper",
@@ -99,4 +99,3 @@
     }
   ]
 }
-

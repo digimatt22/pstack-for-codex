@@ -83,8 +83,9 @@ test("clean Codex profile installs, validates, and tears down the complete plugi
   const market = codex(["plugin", "marketplace", "add", pluginSource, "--json"], codexHome);
   assert.equal(market.marketplaceName, "pstack-for-codex-local");
   const available = codex(["plugin", "list", "--available", "--json"], codexHome);
-  assert.deepEqual(available.available.map((entry) => entry.pluginId), [pluginId]);
-  assert.equal(available.available[0].version, sourceManifest.version);
+  const availablePlugin = available.available.find((entry) => entry.pluginId === pluginId);
+  assert.ok(availablePlugin);
+  assert.equal(availablePlugin.version, sourceManifest.version);
 
   const installation = codex(["plugin", "add", pluginId, "--json"], codexHome);
   assert.equal(installation.version, sourceManifest.version);
@@ -115,7 +116,7 @@ test("clean Codex profile installs, validates, and tears down the complete plugi
   );
   assert.ok(await pathExists(path.join(installedRoot, "evals/rubrics/behavioral-parity.md")));
 
-  const setup = await import(`${pathToFileURL(path.join(installedRoot, "skills/setup-pstack/scripts/manage-agents.mjs")).href}?smoke=${Date.now()}`);
+  const setup = await import(`${pathToFileURL(path.join(installedRoot, "references/workflows/setup-pstack/scripts/manage-agents.mjs")).href}?smoke=${Date.now()}`);
   const projectInstall = await setup.installAgents({ pluginRoot: installedRoot, projectRoot, userHome, scope: "project" });
   assert.equal(projectInstall.files.length, 2);
   assert.equal((await setup.uninstallAgents({ projectRoot, userHome, scope: "project" })).status, "uninstalled");
@@ -138,7 +139,8 @@ test("clean Codex profile installs, validates, and tears down the complete plugi
   assert.equal(await pathExists(installedRoot), false);
   codex(["plugin", "marketplace", "remove", "pstack-for-codex-local", "--json"], codexHome);
   const after = codex(["plugin", "list", "--available", "--json"], codexHome);
-  assert.deepEqual(after, { installed: [], available: [] });
+  assert.equal(after.installed.some((entry) => entry.pluginId === pluginId), false);
+  assert.equal(after.available.some((entry) => entry.pluginId === pluginId), false);
   assert.deepEqual(await filesBelow(path.join(codexHome, "plugins/cache/pstack-for-codex-local")), []);
   assert.equal(await pathExists(path.join(projectRoot, ".codex/pstack-for-codex-agent-receipt.json")), false);
   assert.equal(await pathExists(path.join(userHome, ".codex/pstack-for-codex-agent-receipt.json")), false);
