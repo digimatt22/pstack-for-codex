@@ -56,7 +56,7 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 ### PR mechanics, for every PR
 
-- [ ] Open the PR ready, never draft, with `gh pr create` and `draft: false`, or with Graphite `gt` for a stack.
+- [ ] Open the PR ready, never draft, with `gh pr create` and `draft: false`. For dependent work, pass the immediate parent branch with `--base` and name the dependency in the description.
 - [ ] Run the repo's lint and typecheck once before the PR-facing push. Push with hooks on.
 - [ ] Run `$deslop` before each commit and `$no-comments` before review.
 - [ ] Triage every Bugbot and security-reviewer comment per `../references/bugbot-triage.md`.
@@ -130,7 +130,7 @@ Each live lane runs in its own isolated environment at the PR head through a det
 - [ ] Root's clean verdict at the exact head SHA.
 - [ ] Bugbot triage done.
 - [ ] Rebased onto current trunk after the verdict, patch-id unchanged.
-- [ ] <The owner squash-merges its own PR, or the root appends the PR to the Graphite stack and the operator lands it.>
+- [ ] <The owner merges its independent PR with the repository-approved method, or the root appends the dependent PR to the standard GitHub chain and the operator lands it bottom-up.>
 
 ## Close the program
 

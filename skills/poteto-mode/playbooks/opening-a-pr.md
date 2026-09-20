@@ -22,7 +22,7 @@ Invoked at the end of every other playbook.
 
 After these sections, attach videos or screenshots when they prove a claim. Do not use `## Summary` or `## Test plan` boilerplate. A commit body does not restate its subject.
 
-**Size and stacks.** Prefer five narrow PRs to one large PR. Stack follow-ups with Graphite (`gt`), and keep the ordered stack visible to reviewers. Branch from main only for independent work. Rebase on `main` before substantial stack work.
+**Size and stacks.** Prefer five narrow PRs to one large PR. For dependent work, create one branch per change with ordinary Git and open each PR against its immediate parent branch with `gh pr create --base <parent-branch>`. Name the parent and the bottom-up order in every PR description. Branch from the protected branch for independent work. Synchronize the chain root with the protected branch before substantial dependent work.
 
 **Readiness.** Open every PR ready, never as a draft. Set `draft: false` on PR API calls. If a PR still opens as a draft, run the host's ready command, such as `gh pr ready <number>`. Run `gh pr view <number>` before you refer to PR status.
 

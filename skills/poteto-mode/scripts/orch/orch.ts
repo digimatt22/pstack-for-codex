@@ -81,7 +81,7 @@ interface GateResolveOptions {
 
 interface FrontierSetOptions {
   readonly repo?: string;
-  readonly prs?: readonly number[];
+  readonly prs: readonly number[];
 }
 
 function message(error: unknown): string {
@@ -475,18 +475,18 @@ function createProgram(io: Io): Command {
 
   const frontier = program
     .command("frontier")
-    .description("manage the Graphite stack frontier")
+    .description("manage the ordered GitHub PR frontier")
     .action(() => requireSubcommand(program));
-  leaf(frontier, "set", "discover the Graphite stack and set the frontier")
+  leaf(frontier, "set", "refresh the ordered GitHub PR frontier")
     .addOption(
       new Option(
         "--repo <dir>",
         "repository directory (or CODEX_PSTACK_REPO)"
       ).env("CODEX_PSTACK_REPO")
     )
-    .option(
+    .requiredOption(
       "--prs <n,...>",
-      "optional expected pull request order pin",
+      "pull request order from bottom to top",
       prList
     )
     .action((options: FrontierSetOptions) =>
