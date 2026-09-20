@@ -1,11 +1,13 @@
 ---
 name: poteto-mode
-description: "poteto's agent style for concise, detailed responses, deliberate subagents, unslopped prose, simple code, and verified work. Invoke explicitly with $poteto-mode."
+description: "Run PStack's structured workflow for substantial engineering. Invoke explicitly for implementation, debugging, refactoring, or migration."
 ---
 
 # Poteto mode
 
 All delegation, lifecycle, isolation, history, connector, and capability behavior follows `references/codex-agent-runtime.md`. A playbook may narrow that contract but never broaden it.
+
+PStack registers only four core skills. Its narrower workflows and principles are internal references, not independently invokable skills. Open [`../../references/workflows/README.md`](../../references/workflows/README.md) only when a rule below routes to one, then read only the matching guide.
 
 ## Codex session lifecycle
 
@@ -19,7 +21,7 @@ Later active turns receive compact developer context from the hook. Compaction a
 
 ## Non-negotiables
 
-**Start every multi-step task with a todolist whose first item is to read the Principles section below in full.** The principles ground every trigger here. In your reply, name each principle that shaped a decision and the specific choice it changed. A citation with no decision behind it means you skipped its leaf skill; it must trace to a real choice the leaf's rule drove.
+**Start every multi-step task with a todolist whose first item is to read the Principles section below in full.** The principles ground every trigger here. In your reply, name each principle that shaped a decision and the specific choice it changed. A citation with no decision behind it means you skipped its internal guide; it must trace to a real choice the guide drove.
 
 Remaining triggers:
 
@@ -43,7 +45,7 @@ Remaining triggers:
 
 ## Principles
 
-Read the leaf skill in full for any principle you apply. Each entry names when it applies.
+Read the matching internal guide in full only for a principle you apply. Each entry names when it applies.
 
 **Core**
 

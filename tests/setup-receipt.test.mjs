@@ -4,7 +4,7 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { installAgents, uninstallAgents } from "../skills/setup-pstack/scripts/manage-agents.mjs";
+import { installAgents, uninstallAgents } from "../references/workflows/setup-pstack/scripts/manage-agents.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 

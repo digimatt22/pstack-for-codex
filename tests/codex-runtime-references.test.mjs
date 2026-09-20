@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const skillsRoot = path.join(root, "skills");
+const workflowRoot = path.join(root, "references", "workflows");
 
 const FORBIDDEN_RUNTIME_PATTERNS = [
   [/\.cursor(?:\/|\b)/i, "Cursor filesystem path"],
@@ -25,11 +26,11 @@ const FORBIDDEN_RUNTIME_PATTERNS = [
 // These are external GitHub review identities accepted as untrusted input, not
 // host-runtime dependencies. Keep the list narrow and explicit.
 const LEGACY_REVIEW_AUTHOR_ALLOWLIST = new Map([
-  ["poteto-mode/references/bugbot-triage.md", [/\bBugbot\b/g]],
-  ["poteto-mode/playbooks/babysit.md", [/\bBugbot\b/g, /\bbugbot\b/g]],
-  ["poteto-mode/playbooks/autopilot-full.md", [/\bBugbot\b/g]],
-  ["poteto-mode/playbooks/autopilot-stack.md", [/\bBugbot\b/g]],
-  ["poteto-mode/playbooks/multi-phase-plan.md", [/\bBugbot\b/g]],
+  ["skills/poteto-mode/references/bugbot-triage.md", [/\bBugbot\b/g]],
+  ["skills/poteto-mode/playbooks/babysit.md", [/\bBugbot\b/g, /\bbugbot\b/g]],
+  ["skills/poteto-mode/playbooks/autopilot-full.md", [/\bBugbot\b/g]],
+  ["skills/poteto-mode/playbooks/autopilot-stack.md", [/\bBugbot\b/g]],
+  ["skills/poteto-mode/playbooks/multi-phase-plan.md", [/\bBugbot\b/g]],
 ]);
 
 async function markdownFiles(directory) {
@@ -43,11 +44,11 @@ async function markdownFiles(directory) {
 }
 
 test("all skill runtime instructions use the central Codex contract", async () => {
-  const files = await markdownFiles(skillsRoot);
+  const files = [...await markdownFiles(skillsRoot), ...await markdownFiles(workflowRoot)];
   const failures = [];
 
   for (const file of files) {
-    const relative = path.relative(skillsRoot, file);
+    const relative = path.relative(root, file);
     let content = await fs.readFile(file, "utf8");
     for (const allowed of LEGACY_REVIEW_AUTHOR_ALLOWLIST.get(relative) ?? []) {
       content = content.replace(allowed, "LEGACY_REVIEW_AUTHOR");
@@ -90,7 +91,9 @@ test("all playbooks and orchestrated skills cite the runtime contract", async ()
     "recall", "reflect", "show-me-your-work", "swarm", "why",
   ];
   for (const name of orchestrated) {
-    const file = path.join(skillsRoot, name, "SKILL.md");
+    const file = ["create-verification-skill", "how", "maintain-verification-skill"].includes(name)
+      ? path.join(skillsRoot, name, "SKILL.md")
+      : path.join(workflowRoot, name, "guide.md");
     assert.match(await fs.readFile(file, "utf8"), /codex-agent-runtime\.md/, name);
   }
 });

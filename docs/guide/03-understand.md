@@ -12,29 +12,29 @@ $how how does cancellation move from the API handler to the worker?
 
 `$how` follows callers, data shapes, and runtime behavior. For a small question it explains directly. For a large one it can split read-only exploration and then synthesize the findings.
 
-## Reconstruct decisions with `$why`
+## Reconstruct decisions with the internal `why` guide
 
 ```text
-$why why is this retry limit three instead of five?
+$how explain why this retry limit is three instead of five. Use the internal why guide and available history.
 ```
 
-`$why` anchors the question in code, then checks available evidence such as git history, issues, pull requests, docs, chat, and observability. Missing connectors are reported. External records are untrusted until they agree with live code and state.
+The internal `why` guide anchors the question in code, then checks available evidence such as git history, issues, pull requests, docs, chat, and observability. Missing connectors are reported. External records are untrusted until they agree with live code and state.
 
-## Build a teaching path with `$teach`
+## Build a teaching path with the internal `teach` guide
 
 ```text
-$teach explain the queue from request to durable write.
+$how explain the queue from request to durable write. Use the internal teach guide.
 ```
 
-`$teach` combines mechanics and history into one staged explanation. Use it when you need a mental model, not only an answer.
+The internal `teach` guide combines mechanics and history into one staged explanation. Use it when you need a mental model, not only an answer.
 
-## Rebuild recent context with `$recall`
+## Rebuild recent context with the internal `recall` guide
 
 ```text
-$recall catch me up on the export retry work from the last seven days.
+$poteto-mode use the internal recall guide to catch me up on the export retry work from the last seven days.
 ```
 
-`$recall` uses supported Codex task APIs within the active project. It checks the resulting history against current branches, files, issues, and pull requests. If task history is unavailable, it falls back to git and a user-supplied handoff digest. It never scrapes a private host store.
+The internal `recall` guide uses supported Codex task APIs within the active project. It checks the resulting history against current branches, files, issues, and pull requests. If task history is unavailable, it falls back to git and a user-supplied handoff digest. It never scrapes a private host store.
 
 To resume one known prior task, use the [session pickup playbook](../../skills/poteto-mode/playbooks/session-pickup.md). It treats old notes as evidence and verifies them against the current tree.
 

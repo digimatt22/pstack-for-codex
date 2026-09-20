@@ -1,8 +1,21 @@
 # Upstream maintenance
 
-This repository derives from `pstack` in `https://github.com/cursor/plugins`. The locked source is version `0.15.1` at commit `f8abeddd1862dc73704e3d719dd73df0d51b8c71`.
+This repository has two update relationships:
 
-The delivered repository contains only the modified Codex version. Do not push a raw upstream branch or snapshot commit. Do not keep an upstream remote in the delivered checkout.
+- GitHub fork maintenance tracks `https://github.com/Aqua-123/pstack-for-codex`.
+- Source provenance tracks `pstack` in `https://github.com/cursor/plugins`. The locked source is version `0.15.1` at commit `f8abeddd1862dc73704e3d719dd73df0d51b8c71`.
+
+Keep the normal fork remotes in a maintainer checkout:
+
+```bash
+git remote add upstream https://github.com/Aqua-123/pstack-for-codex.git
+git fetch upstream
+git switch main
+git merge --ff-only upstream/main
+git push origin main
+```
+
+When local fork changes prevent a fast-forward, merge or rebase on a review branch and run the full release gate before updating `main`. Do not push a raw `cursor/plugins` branch or snapshot commit into this repository. Use a temporary source checkout for provenance refreshes.
 
 ## Provenance files
 
@@ -34,7 +47,7 @@ The command must report `Verified 158 files`.
 4. Port behavior into the Codex tree. Do not copy host-specific installation or runtime claims.
 5. Update the source metadata and hashes in `upstream.lock.json` only after review.
 6. Regenerate `compatibility/report.md` and run the full release checks.
-7. Delete the temporary source checkout. Confirm that the delivered repository has no upstream remote or raw source branch.
+7. Delete the temporary source checkout. Confirm that the delivered repository has no raw `cursor/plugins` source branch. The Git remote named `upstream` may remain pointed at `Aqua-123/pstack-for-codex`.
 
 To inspect a candidate without changing the committed report, run:
 

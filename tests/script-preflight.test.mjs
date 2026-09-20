@@ -114,7 +114,7 @@ test("worktree audit keeps nested and stale worktrees behind a task-use gate", (
 
 test("decision log rejects a directory target without modifying it", () => {
   const fixture = mkdtempSync(join(tmpdir(), "pstack-log-boundary-"));
-  const script = join(root, "skills", "show-me-your-work", "scripts", "log.sh");
+  const script = join(root, "references", "workflows", "show-me-your-work", "scripts", "log.sh");
   const before = execFileSync("find", [fixture, "-maxdepth", "1", "-print"], { encoding: "utf8" });
   const result = spawnSync(script, [fixture, "phase", "decision", "why", "evidence", "result"], { encoding: "utf8" });
   const after = execFileSync("find", [fixture, "-maxdepth", "1", "-print"], { encoding: "utf8" });

@@ -1,6 +1,6 @@
 # The pstack for Codex guide
 
-This guide takes one task from installation through verification. Every pstack skill is explicit-only, so examples use `$skill-name`.
+This guide takes one task from installation through verification. Four core skills are explicit-only. Examples route narrower workflows through `$poteto-mode` or `$how`.
 
 1. [Set up pstack](./01-setup.md).
 2. [Route work through `$poteto-mode`](./02-poteto-mode.md).

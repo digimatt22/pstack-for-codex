@@ -5,7 +5,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const EXPECTED_SKILL_COUNT = 48;
+export const EXPECTED_SKILL_COUNT = 4;
 export const SKILL_IDENTITY_LIMIT = 64;
 const MANIFEST_FIELDS = new Set([
   "name",
@@ -165,7 +165,12 @@ async function validateResources(root, records) {
   const pluginRoot = `${path.resolve(root)}${path.sep}`;
   for (const record of records) {
     const skillRoot = path.dirname(record.skillPath);
-    for (const file of await markdownFiles(skillRoot)) {
+    const pending = await markdownFiles(skillRoot);
+    const visited = new Set();
+    while (pending.length) {
+      const file = pending.shift();
+      if (visited.has(file)) continue;
+      visited.add(file);
       const content = await fs.readFile(file, "utf8");
       const links = content.matchAll(/!?\[[^\]]*\]\(([^)]+)\)/g);
       for (const match of links) {
@@ -180,6 +185,7 @@ async function validateResources(root, records) {
         }
         const stat = await fs.stat(resolved).catch(() => null);
         if (!stat) errors.push(`${record.name}: missing resource ${target} from ${path.relative(root, file)}`);
+        else if (stat.isFile() && resolved.endsWith(".md") && !visited.has(resolved)) pending.push(resolved);
       }
     }
   }

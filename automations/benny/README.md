@@ -2,7 +2,7 @@
 
 Benny is two dormant local polling automations: one triages issue reports, the other reproduces accepted bugs and may open a draft pull request. Installation does not create or enable either automation.
 
-Use the registered `$setup-benny` skill. It copies this pack to `.codex/automations/benny/`, keeps configuration under `.codex/benny/`, and places mutable state in a shared canonical user-owned directory outside scheduler worktrees. The setup receipt owns only copied files and automation IDs; configuration and state survive upgrade and uninstall by default.
+Ask `$poteto-mode` to route to the internal `setup-benny` reference. It copies this pack to `.codex/automations/benny/`, keeps configuration under `.codex/benny/`, and places mutable state in a shared canonical user-owned directory outside scheduler worktrees. The setup receipt owns only copied files and automation IDs; configuration and state survive upgrade and uninstall by default.
 
 Every report uses `report_id = sha256(workspace-or-team, channel, root-thread timestamp)`. Every external effect has a versioned operation key. Destination-side atomic idempotency or authoritative lookup is required; a local lease only serializes work and cannot prove an external write. Ambiguous writes are quarantined until lookup proves their outcome.
 

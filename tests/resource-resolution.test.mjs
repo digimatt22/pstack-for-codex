@@ -12,7 +12,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 test("skill resources resolve from an installed cache-like copy", async (context) => {
   const temporary = await fs.mkdtemp(path.join(os.tmpdir(), "pstack-installed-cache-"));
   context.after(() => fs.rm(temporary, { recursive: true, force: true }));
-  const installed = path.join(temporary, "pstack-for-codex", "0.2.0");
+  const installed = path.join(temporary, "pstack-for-codex", "0.3.0");
   await fs.cp(root, installed, {
     recursive: true,
     filter: (source) => !source.split(path.sep).includes(".git"),
@@ -32,8 +32,8 @@ test("a missing installed resource fails with its owning skill", async (context)
     recursive: true,
     filter: (source) => !source.split(path.sep).includes(".git"),
   });
-  await fs.rm(path.join(temporary, "skills/architect/references/design-red-flags.md"));
+  await fs.rm(path.join(temporary, "references/workflows/architect/references/design-red-flags.md"));
 
   const report = await validatePlugin(temporary, { probeBun: false });
-  assert.match(report.errors.join("\n"), /architect.*references\/design-red-flags\.md/);
+  assert.match(report.errors.join("\n"), /poteto-mode.*references\/design-red-flags\.md/);
 });

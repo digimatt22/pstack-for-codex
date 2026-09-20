@@ -25,11 +25,12 @@ function qualifiedConfig() {
   return { stateRoot: "/Users/operator/.codex/benny/state/repo", approvedConfigHash: "a".repeat(64), trustedTriageIdentity: "U1", adapters, capabilities, canaries };
 }
 
-test("only setup-benny is registered and the inventory includes it", async () => {
+test("Benny setup remains available as an internal reference", async () => {
   const records = await listSkillRecords(root);
-  assert.equal(EXPECTED_SKILL_COUNT, 48);
-  assert.equal(records.length, 48);
-  assert.equal(records.filter((record) => record.name === "setup-benny").length, 1);
+  assert.equal(EXPECTED_SKILL_COUNT, 4);
+  assert.equal(records.length, 4);
+  assert.equal(records.some((record) => record.name === "setup-benny"), false);
+  assert.equal((await fs.stat(path.join(root, "references/workflows/setup-benny/guide.md"))).isFile(), true);
   assert.equal(records.some((record) => record.name === "benny-triage-poll"), false);
   assert.equal(records.some((record) => record.name === "benny-reproduce-poll"), false);
 });
@@ -63,7 +64,7 @@ test("automation reconciliation preserves stable IDs and never unpauses", () => 
 });
 
 test("setup names source-managed, user-owned, retention, credential, and canary boundaries", async () => {
-  const setup = await fs.readFile(path.join(root, "skills/setup-benny/SKILL.md"), "utf8");
+  const setup = await fs.readFile(path.join(root, "references/workflows/setup-benny/guide.md"), "utf8");
   for (const phrase of [".codex/automations/benny/", ".codex/benny/", "owner-only", "Preserve user configuration", "credential", "read-only", "ambiguous-write", "PAUSED"]) {
     assert.match(setup, new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
   }

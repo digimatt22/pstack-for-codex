@@ -1,6 +1,6 @@
 # Benny operator intent
 
-This directory is a source-managed, dormant Codex automation pack. Copy it to a target project's `.codex/automations/benny/`. Register only the plugin's top-level `$setup-benny` skill; the operational `SKILL.md` files here are direct cron instructions.
+This directory is a source-managed, dormant Codex automation pack. Copy it to a target project's `.codex/automations/benny/`. Use the plugin's internal `setup-benny` reference through `$poteto-mode`; the operational `SKILL.md` files here are direct cron instructions.
 
 ## Non-negotiable outcomes
 
@@ -17,4 +17,4 @@ Credential values never enter these files, configuration, state, receipts, promp
 
 ## Setup boundary
 
-Use `$setup-benny` for install and capability checks. Do not create or update automations until the user explicitly authorizes that lifecycle. Reconcile existing automation IDs before creating anything, use the stable names `pstack-benny-triage` and `pstack-benny-reproduce`, and leave both `PAUSED`. Activation is a separate operator decision after the six named canaries pass.
+Use the internal `setup-benny` reference for install and capability checks. Do not create or update automations until the user explicitly authorizes that lifecycle. Reconcile existing automation IDs before creating anything, use the stable names `pstack-benny-triage` and `pstack-benny-reproduce`, and leave both `PAUSED`. Activation is a separate operator decision after the six named canaries pass.

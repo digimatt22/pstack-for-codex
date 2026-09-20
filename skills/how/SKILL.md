@@ -1,11 +1,13 @@
 ---
 name: how
-description: "Use for \"how does X work\", code walkthroughs before changing something, and placement / ownership / layering questions (\"where should this live\", \"which package owns this\", \"is this the right layer\"). Explains subsystem architecture, runtime flow, onboarding mental models. Can critique architecture. Use why for motivation."
+description: "Trace how a repository subsystem works and where behavior belongs. Use for architecture walkthroughs, ownership, layering, or critique."
 ---
 
 # How
 
 Delegation and optional capabilities follow `../poteto-mode/references/codex-agent-runtime.md`.
+
+For critique synthesis, use the internal [`interrogate`](../../references/workflows/interrogate/guide.md) reference. For historical motivation, use the internal [`why`](../../references/workflows/why/guide.md) reference. These are on-demand guides, not registered skills.
 
 Explore the codebase to answer "how does X work?" questions. Produce clear architectural explanations at the level of a senior engineer onboarding onto a subsystem. Enough to build a working mental model, not annotated source code.
 
