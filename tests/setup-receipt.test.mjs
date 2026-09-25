@@ -26,12 +26,33 @@ test("an unchanged project-scoped install is reversible from its hash receipt", 
   assert.equal(receipt.scope, "project");
   assert.equal(receipt.files.length, 2);
   assert.ok(receipt.files.every((file) => /^[a-f0-9]{64}$/.test(file.sha256)));
+  const poteto = receipt.files.find((file) => file.path.endsWith("pstack-poteto-agent.toml"));
+  assert.deepEqual(poteto.model_policy, {
+    status: "unverified-inheritance",
+    requested: { model: "gpt-6-luna", reasoning_effort: "medium" },
+    resolved: null,
+    toml: {},
+  });
 
   const removed = await uninstallAgents({ projectRoot, userHome, scope: "project" });
   assert.equal(removed.status, "uninstalled");
   for (const file of receipt.files) {
     await assert.rejects(fs.stat(path.join(projectRoot, file.path)), { code: "ENOENT" });
   }
+});
+
+test("the default Poteto worker pair is written only when observable capabilities validate it", async (t) => {
+  const { projectRoot, userHome } = await fixture(t);
+  const installed = await installAgents({
+    pluginRoot: root,
+    projectRoot,
+    userHome,
+    scope: "project",
+    observableModels: [{ slug: "gpt-6-luna", reasoning_efforts: ["low", "medium", "high"] }],
+  });
+  const profile = installed.files.find((file) => file.path.endsWith("pstack-poteto-agent.toml"));
+  assert.deepEqual(profile.model_policy.resolved, { model: "gpt-6-luna", reasoning_effort: "medium" });
+  assert.match(await fs.readFile(path.join(projectRoot, profile.path), "utf8"), /model = "gpt-6-luna"\nmodel_reasoning_effort = "medium"/);
 });
 
 test("a locally modified installed profile requires review and remains untouched", async (t) => {

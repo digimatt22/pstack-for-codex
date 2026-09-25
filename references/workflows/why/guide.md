@@ -114,7 +114,7 @@ Aim for a complete **coverage map**, not a minimal one. A null result from an is
 
 Launch all matching investigators in a single message so they run concurrently. One investigator per category lets each specialize in one tool's query vocabulary and result shape. Don't ask one agent to cover multiple MCPs.
 
-Use the configured investigator profile or a generic agent with inherited model settings. Give each agent only the read capabilities required for its evidence category. If the runtime cannot prove a connector is read-only, perform that lookup in the parent or mark the category unavailable. A prose prohibition is not a sandbox.
+For investigation within repository-change work, request GPT-6 Luna at medium reasoning for each investigator. Use another validated model only when the investigation has a specialized role that requires it; state that requirement. Give each agent only the read capabilities required for its evidence category. If the runtime cannot prove a connector is read-only, perform that lookup in the parent or mark the category unavailable. A prose prohibition is not a sandbox.
 
 Each investigator gets:
 1. The base prompt from `references/investigator-prompt.md`
@@ -156,7 +156,7 @@ If your scope assessment suggests a single-commit trivial target where the PR de
 
 ## Step 4. Synthesize
 
-Use the configured synthesizer profile or a generic agent with inherited settings. Give it read-only access to cited evidence only. If no agent is available, synthesize sequentially in the parent and label that fallback.
+For repository-change work, request GPT-6 Luna at medium reasoning for the synthesizer. Use another validated model only when the synthesis role requires it; state that requirement. Give it read-only access to cited evidence only. If no agent is available, synthesize sequentially in the parent only when the synthesis is non-writing; repository edits remain queued for a worker.
 
 The synthesizer gets:
 1. The investigator findings, including any null results and any categories skipped with justification

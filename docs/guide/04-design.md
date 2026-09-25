@@ -18,7 +18,7 @@ The internal `architect` guide grounds the request in current callers and types.
 $poteto-mode use the internal arena guide to produce three parser designs from this brief. Keep each candidate isolated and judge them against migration cost and failure handling.
 ```
 
-The candidates need independent output directories or worktrees. The parent reads them, selects a base, integrates useful parts, and verifies the result. If independent agents are unavailable, the internal `arena` guide declares a sequential fallback or returns partial coverage.
+The candidates need independent output directories or worktrees. The parent reads and selects a base, then assigns any repository integration edits to a worker and verifies the result. A sequential fallback applies only to disposable candidates outside repository files; repository-writing candidates remain queued when independent agents are unavailable.
 
 ## Cover separate slices with the internal `swarm` guide
 
