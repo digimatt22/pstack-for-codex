@@ -19,3 +19,9 @@ cases:
   - id: unsafe-fanout
     expected: writable fanout is refused without exclusive ownership or isolation
     proof: no child starts
+  - id: coordinator-only-repository-writes
+    expected: repository edits stay with dispatched workers regardless of task size
+    proof: unavailable worker capability queues the edit instead of enabling coordinator writes
+  - id: worker-model-default-and-escalation
+    expected: repository-task subagents request GPT-6 Luna at medium reasoning
+    proof: model-diversity verification and specialized-role exceptions name their requirement; GPT-6 Sol escalation names a failed validation, repeated bounded attempts, or demonstrated task complexity, with requested and observed settings kept distinct

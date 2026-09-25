@@ -14,12 +14,20 @@ Use a named custom agent profile when it is installed and appropriate. Otherwise
 
 Before dispatch, choose one fallback:
 
-- `sequential-parent` for work the parent can safely complete without independence.
+- `coordinator-only` for repository changes. The coordinator frames work, checks capabilities, dispatches an isolated writer, reviews the actual diff, and owns integration and verification. Repository-writing playbooks require this path regardless of task size. If no subagent can be started, keep the bounded unit queued and report the missing capability; do not take over its edits sequentially.
 - `generic-agent` when a portable prompt can preserve the role.
 - `partial-result` when independent lanes may be absent without invalidating the answer.
 - `fail-closed` when independence, credentials isolation, a live control surface, or another named capability is part of correctness.
 
-If subagents are unavailable or capacity is exhausted, queue bounded work or use the declared sequential path. Never silently drop a lane. Nested coordinators must own a bounded subtree and return one aggregate. If nesting or capacity is unavailable, flatten the queue into the parent.
+Use `sequential-parent` only for work that does not write repository files and does not require independent review. If subagents are unavailable or capacity is exhausted, queue bounded repository work and state the capability blocker. Never silently drop a lane or convert a repository writer into the coordinator. Nested coordinators must own a bounded subtree and return one aggregate. If nesting or capacity is unavailable, flatten the queue while keeping repository edits with an available worker.
+
+### Implementation worker model
+
+Request `gpt-6-luna` with `medium` reasoning for every subagent on repository-change work, including read-only investigation and review lanes. This is the standard request, not a claim about the model actually served. Validate the pair using the observable model inventory or the dispatch surface's supported model and effort choices. Request Luna explicitly at dispatch. If a selected custom profile pins a conflicting model, use a generic delegate with the portable prompt or another profile that does not override the requested pair. If Luna or the requested effort cannot be requested, do not inherit the coordinator's model or silently substitute another model; report the constraint and keep the work queued.
+
+Use another model only when an active workflow requires model diversity for an independent verifier or judge, or a specialized role requires a different validated pair. Name the workflow requirement and the requested pair. Do not use a different model merely because a profile happens to be configured. Installed profile configuration without a validated inventory remains unverified and does not prove which model ran.
+
+Escalate a worker to `gpt-6-sol` with `medium` reasoning only when the record shows a concrete trigger: a failed validation after a bounded repair attempt, repeated bounded attempts without progress, or task complexity demonstrated by cross-subsystem invariants, a required architecture change, or an unresolved correctness risk. State the trigger and the requested pair before escalation. Check availability and effort support first. Keep requested model and reasoning separate from observed runtime model and effort; when the live surface cannot report them, mark them unverified.
 
 ## Isolate writes before parallelism
 
@@ -29,7 +37,7 @@ Codex agents may share a filesystem. Read-only exploration can share a checkout.
 2. a separate git worktree or branch managed by the parent; or
 3. a separate output directory for disposable candidates.
 
-If none is available, refuse writable fan-out and run serially. Each brief names owned paths, forbidden paths, expected output, verification, and the fact that other actors may be editing the repository. Children must not revert unrelated changes. The parent owns integration, authoritative tests, commits, pushes, and the final report unless the user explicitly assigns those actions elsewhere.
+If none is available, refuse writable fan-out and queue repository edits; do not run them serially in the coordinator. Each brief names owned paths, forbidden paths, expected output, verification, and the fact that other actors may be editing the repository. Children must not revert unrelated changes. The parent owns integration, authoritative tests, commits, pushes, and the final report unless the user explicitly assigns those actions elsewhere.
 
 ## Dispatch, wait, steer, cancel, and retry
 

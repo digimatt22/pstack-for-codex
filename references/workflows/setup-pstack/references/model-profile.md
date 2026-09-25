@@ -6,14 +6,14 @@ Codex custom agents are standalone TOML files in project `.codex/agents/` or use
 
 | Role | Writable scope | Sandbox policy | Connector posture | Skill posture | Model policy | Fallback |
 | --- | --- | --- | --- | --- | --- | --- |
-| `pstack-poteto-agent` | Inherits the live parent request; setup does not grant writes | Inherits the live runtime so setup cannot broaden authority | Inherits, but use remains limited to the parent request | Must read `poteto-mode`; portable prompt is authoritative | Inherit by default; install an explicit pair only after an observable model list validates both values | Include `poteto-agent-prompt.md` in a generic-agent task; use the parent sequentially when agents are unavailable |
+| `pstack-poteto-agent` | Inherits the live parent request; setup does not grant writes | Inherits the live runtime so setup cannot broaden authority | Inherits, but use remains limited to the parent request | Must read `poteto-mode`; portable prompt is authoritative | Dispatch explicitly requests GPT-6 Luna with medium reasoning; setup writes that pair only after an observable model list validates both values | Include `poteto-agent-prompt.md` in a generic-agent task; queue repository edits when workers are unavailable |
 | `pstack-comment-sicko` | None | Explicit `read-only` default; live parent restrictions may narrow it further | Prohibited by prompt; setup does not claim it can prove connector isolation | May use `how` and `why` for read-only investigation | Inherit by default; install an explicit pair only after validation | Use the portable prompt in a deliberately constrained generic agent; otherwise skip and report the missing isolation |
 
 Custom-agent defaults never prove the served model, effort, effective sandbox, connector set, or skill availability. A setup receipt describes written configuration only. Runtime receipts must come from an observable Codex surface.
 
 ## Model resolution
 
-- No requested pair: omit `model` and `model_reasoning_effort`; both inherit.
+- No requested pair: omit `model` and `model_reasoning_effort`; both inherit. Repository-task dispatch still explicitly requests GPT-6 Luna with medium reasoning; an installed profile that pins another model is not suitable for that dispatch.
 - Requested pair plus an observable model list: require an exact model match and require the effort in that model's advertised effort set before writing both fields.
 - Requested pair without an observable model list: record `unverified-inheritance`, omit both TOML fields, and show the requested pair only as unverified intent.
 - Missing entitlement or unsupported pair: stop without changing profiles. Do not silently select a substitute.

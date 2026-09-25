@@ -24,13 +24,13 @@ Use the supported Codex task-history API for the current task when available. Ke
 
 ### 2. Spawn three reviewers in parallel
 
-After proving the reviewers are read-only and independent, dispatch three reviewers together. Use installed named profiles when observable; otherwise use generic agents with inherited model pairs. Connector lookups remain read-only, limited to sources referenced by the task, and follow the central runtime contract. The parent applies edits.
+After proving the reviewers are read-only and independent, dispatch three reviewers together. Request GPT-6 Luna at medium reasoning for each reviewer; use another validated model only when this review requires independent model diversity. Connector lookups remain read-only, limited to sources referenced by the task, and follow the central runtime contract. After the user approves an Accepted item, the parent delegates its repository edit to a bounded worker, reviews the diff, and owns verification.
 
 | Lens | `model` | Prompt template |
 |---|---|---|
-| Judgment | configured judgment profile or generic inherited agent | `references/judgment-reviewer.md` |
-| Tooling | configured tooling profile or generic inherited agent | `references/tooling-reviewer.md` |
-| Divergent | configured judgment profile or generic inherited agent | `references/divergent-reviewer.md` |
+| Judgment | Luna worker with the judgment reviewer prompt | `references/judgment-reviewer.md` |
+| Tooling | Luna worker with the tooling reviewer prompt | `references/tooling-reviewer.md` |
+| Divergent | Luna worker with the divergent reviewer prompt | `references/divergent-reviewer.md` |
 
 Pass each template verbatim, substituting supported task history or the digest where marked. Reviewers return findings in the subagent result. If fewer than three independent agents are available, return a labeled partial review rather than inventing consensus.
 

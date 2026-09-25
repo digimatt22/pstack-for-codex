@@ -17,7 +17,7 @@ Read `references/model-profile.md` before changing configuration. The portable p
 
 ## Model policy
 
-Ask whether each role should inherit the parent or request an explicit `model` plus `reasoning_effort` pair.
+For repository work, request GPT-6 Luna with medium reasoning for every dispatched agent, including read-only lanes. Setup profile configuration is separate from dispatch: use another validated model only for independent model diversity or a specialized role, and record the reason. A profile that pins a conflicting model must not override the dispatch request; use a generic delegate or a compatible profile.
 
 If a supported Codex model-list surface is observable, convert it to JSON records shaped like:
 
@@ -25,13 +25,13 @@ If a supported Codex model-list surface is observable, convert it to JSON record
 [{"slug":"gpt-5.6-sol","reasoning_efforts":["low","medium","high","xhigh","max","ultra"]}]
 ```
 
-Validate both values before writing them. If no supported model list is observable, do not guess or accept pasted entitlement claims as proof: omit both TOML fields, inherit the parent, and record `unverified-inheritance` with the requested pair in the receipt. A missing model or unsupported effort is a hard stop; let the user choose another pair or inheritance.
+Validate both values before writing them. If no supported model list is observable, do not guess or accept pasted entitlement claims as proof: omit both TOML fields, inherit the parent, and record `unverified-inheritance` with the requested pair in the receipt. A missing model or unsupported effort is a hard stop; do not silently select a substitute. Repository work remains queued until an appropriate worker can be dispatched.
 
 Profiles are a JSON object keyed by namespaced agent name:
 
 ```json
 {
-  "pstack-poteto-agent": {"model":"gpt-5.6-sol","reasoning_effort":"high"},
+  "pstack-poteto-agent": {"model":"gpt-6-luna","reasoning_effort":"medium"},
   "pstack-comment-sicko": {"model":"gpt-5.6-terra","reasoning_effort":"medium"}
 }
 ```
