@@ -15,8 +15,8 @@ test("fork and upstream identities remain separate", async () => {
     readJson("package.json"),
     readJson("upstream.lock.json"),
   ]);
-  assert.equal(manifest.version, "0.3.1");
-  assert.equal(packageJson.version, "0.3.1");
+  assert.equal(manifest.version, "0.3.2");
+  assert.equal(packageJson.version, "0.3.2");
   assert.equal(lock.source.version, "0.15.1");
   assert.equal(lock.source.commit, "f8abeddd1862dc73704e3d719dd73df0d51b8c71");
   assert.equal(lock.inventory.fileCount, 158);
@@ -51,7 +51,7 @@ test("inventory accounts for every upstream file, skill, and playbook", async ()
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
   assert.deepEqual(
-    [...records.map((record) => record.directory), ...workflowDirectories.filter((name) => name !== "setup-benny")].sort(),
+    [...records.map((record) => record.directory), ...workflowDirectories.filter((name) => !["setup-benny", "create-formal-verification", "maintain-formal-verification", "statechart"].includes(name))].sort(),
     upstreamSkills,
   );
   assert.equal(workflowDirectories.filter((name) => name === "setup-benny").length, 1);

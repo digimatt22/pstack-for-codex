@@ -7,6 +7,8 @@ description: "Trace how a repository subsystem works and where behavior belongs.
 
 Delegation and optional capabilities follow `../poteto-mode/references/codex-agent-runtime.md`.
 
+For TLA+ state machine models or formal verification questions, use the internal [`statechart`](../../references/workflows/statechart/guide.md) and [`create-formal-verification`](../../references/workflows/create-formal-verification/guide.md) guides. Use [`maintain-formal-verification`](../../references/workflows/maintain-formal-verification/guide.md) when checking model drift after code changes. These are on-demand guides, not registered skills.
+
 For critique synthesis, use the internal [`interrogate`](../../references/workflows/interrogate/guide.md) reference. For historical motivation, use the internal [`why`](../../references/workflows/why/guide.md) reference. These are on-demand guides, not registered skills.
 
 Explore the codebase to answer "how does X work?" questions. Produce clear architectural explanations at the level of a senior engineer onboarding onto a subsystem. Enough to build a working mental model, not annotated source code.

@@ -6,6 +6,10 @@ Open a guide only when `poteto-mode` or `how` routes to it. Read its linked reso
 
 ## Workflows
 
+- [`create-formal-verification`](create-formal-verification/guide.md)
+- [`maintain-formal-verification`](maintain-formal-verification/guide.md)
+- [`statechart`](statechart/guide.md)
+
 - [`architect`](architect/guide.md)
 - [`arena`](arena/guide.md)
 - [`automate-me`](automate-me/guide.md)
