@@ -17,6 +17,14 @@ git push origin main
 
 When local fork changes prevent a fast-forward, merge or rebase on a review branch and run the full release gate before updating `main`. Do not push a raw `cursor/plugins` branch or snapshot commit into this repository. Use a temporary source checkout for provenance refreshes.
 
+## Selective formal-tool provenance
+
+The Codex-native statechart runner and its supporting guides are pinned separately in [`compatibility/formal-tools.lock.json`](./compatibility/formal-tools.lock.json). It records the selected upstream source paths and SHA-256 hashes at commit `bb68f2365eceafa0cb2d253112f675acf5f144cc`. This scoped pin does not change the repository-wide `0.15.1` snapshot or its 158-file lock.
+
+When updating these tools, review the selected source delta and Codex adaptations, then update only this selective pin and its derived-path mappings. Keep the original `upstream.lock.json` unchanged unless a separate full snapshot refresh is intended.
+
+Run `npm run test:statechart:offline` for parser-only CLI checks; it names TLC cases it skips. The release gate runs `test:statechart:tlc`, which requires the pinned jar and Java (from explicit `TLA2TOOLS` and `JAVA` paths or tools already installed with mise). `npm run test:statechart:render` installs Pele and Mermaid from npm and needs network access. These tests require Node versions allowed by the package engine range, `^22.18.0 || >=23.6.0`.
+
 ## Provenance files
 
 - [`NOTICE`](./NOTICE) records attribution and the source commit.

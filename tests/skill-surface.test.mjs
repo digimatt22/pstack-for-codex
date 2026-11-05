@@ -12,7 +12,7 @@ test("internal workflows remain indexed references instead of registered skills"
   const workflowRoot = path.join(root, "references", "workflows");
   const entries = await fs.readdir(workflowRoot, { withFileTypes: true });
   const directories = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
-  assert.equal(directories.length, 44);
+  assert.equal(directories.length, 47);
   const index = await fs.readFile(path.join(workflowRoot, "README.md"), "utf8");
   for (const directory of directories) {
     assert.match(index, new RegExp(`\\(${directory}/guide\\.md\\)`));
