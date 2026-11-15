@@ -28,8 +28,8 @@ test("an unchanged project-scoped install is reversible from its hash receipt", 
   assert.ok(receipt.files.every((file) => /^[a-f0-9]{64}$/.test(file.sha256)));
   const poteto = receipt.files.find((file) => file.path.endsWith("pstack-poteto-agent.toml"));
   assert.deepEqual(poteto.model_policy, {
-    status: "unverified-inheritance",
-    requested: { model: "gpt-6-luna", reasoning_effort: "medium" },
+    status: "inherited",
+    requested: null,
     resolved: null,
     toml: {},
   });
@@ -41,18 +41,35 @@ test("an unchanged project-scoped install is reversible from its hash receipt", 
   }
 });
 
-test("the default Poteto worker pair is written only when observable capabilities validate it", async (t) => {
+test("an explicitly requested Poteto pair is written only when observable capabilities validate it", async (t) => {
   const { projectRoot, userHome } = await fixture(t);
   const installed = await installAgents({
     pluginRoot: root,
     projectRoot,
     userHome,
     scope: "project",
+    profile: { "pstack-poteto-agent": { model: "gpt-6-luna", reasoning_effort: "medium" } },
     observableModels: [{ slug: "gpt-6-luna", reasoning_efforts: ["low", "medium", "high"] }],
   });
   const profile = installed.files.find((file) => file.path.endsWith("pstack-poteto-agent.toml"));
   assert.deepEqual(profile.model_policy.resolved, { model: "gpt-6-luna", reasoning_effort: "medium" });
   assert.match(await fs.readFile(path.join(projectRoot, profile.path), "utf8"), /model = "gpt-6-luna"\nmodel_reasoning_effort = "medium"/);
+});
+
+test("default profiles inherit even when the inventory has no formerly preferred worker model", async (t) => {
+  const { projectRoot, userHome } = await fixture(t);
+  const installed = await installAgents({
+    pluginRoot: root,
+    projectRoot,
+    userHome,
+    scope: "project",
+    observableModels: [{ slug: "available-model", reasoning_efforts: ["high"] }],
+  });
+  for (const profile of installed.files) {
+    assert.equal(profile.model_policy.status, "inherited");
+    assert.equal(profile.model_policy.requested, null);
+    assert.doesNotMatch(await fs.readFile(path.join(projectRoot, profile.path), "utf8"), /^model(?:_reasoning_effort)? = /m);
+  }
 });
 
 test("a locally modified installed profile requires review and remains untouched", async (t) => {

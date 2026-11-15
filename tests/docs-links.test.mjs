@@ -82,7 +82,7 @@ test("documentation links and images resolve from an installed copy", async (con
   const installed = path.join(temporary, "pstack-for-codex", "0.3.1");
   await fs.cp(root, installed, {
     recursive: true,
-    filter: (source) => !source.split(path.sep).some((part) => part === ".git" || part === "node_modules"),
+    filter: (source) => !path.relative(root, source).split(path.sep).some((part) => part === ".git" || part === "node_modules" || part === ".local"),
   });
 
   assert.deepEqual(await validateDocumentationLinks(installed), []);

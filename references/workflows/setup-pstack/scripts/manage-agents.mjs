@@ -11,13 +11,12 @@ const ROLE_SPECS = [
     name: "pstack-poteto-agent",
     template: "templates/codex-agents/pstack-poteto-agent.toml",
     prompt: "skills/poteto-mode/references/poteto-agent-prompt.md",
-    defaultModel: { model: "gpt-6-luna", reasoning_effort: "medium" },
     capability: {
       sandbox: "inherited-unverified-at-setup",
       writable_scope: "parent-request-only",
       connectors: "inherited-parent-authority",
       skills: ["poteto-mode"],
-      fallback: "generic-agent-with-portable-prompt-or-queue",
+      fallback: "generic-agent-with-portable-prompt-or-sequential-parent-unless-required-independence",
     },
   },
   {
@@ -220,7 +219,7 @@ export async function installAgents({
 
   const rendered = [];
   for (const role of ROLE_SPECS) {
-    const requested = Object.hasOwn(profile, role.name) ? profile[role.name] : role.defaultModel ?? null;
+    const requested = Object.hasOwn(profile, role.name) ? profile[role.name] : null;
     const modelPolicy = resolveModelPolicy({ requested, observableModels });
     const [template, prompt] = await Promise.all([
       fs.readFile(path.join(pluginRoot, role.template), "utf8"),

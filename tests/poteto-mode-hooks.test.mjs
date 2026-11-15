@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -36,6 +37,13 @@ test("hook manifest uses current Codex events and exact Poteto matcher", async (
   assert.equal(manifest.hooks.SessionStart[0].matcher, "resume|compact");
   assert.equal(manifest.hooks.SubagentStart[0].matcher, "^pstack-poteto-agent$");
   assert.match(manifest.hooks.UserPromptSubmit[0].hooks[0].command, /\$PLUGIN_ROOT/);
+  for (const groups of Object.values(manifest.hooks)) {
+    for (const group of groups) {
+      for (const hook of group.hooks) {
+        assert.match(hook.commandWindows, /%PLUGIN_ROOT%/);
+      }
+    }
+  }
   assert.equal("matcher" in manifest.hooks.UserPromptSubmit[0], false);
 });
 
@@ -65,6 +73,15 @@ test("Codex namespaced and linked skill invocations activate", () => {
   ]) assert.equal(classifyPrompt(prompt), "activate", prompt);
 });
 
+test("normalized Windows skill links activate with either separator", () => {
+  const backslashPath = "C:\\Users\\Baker\\.codex\\plugins\\cache\\pstack-for-codex-local\\pstack-for-codex\\0.3.1\\skills\\poteto-mode\\SKILL.md";
+  const escapedBackslashPath = backslashPath.replace("\\.codex", "\\\\.codex");
+  const forwardSlashPath = backslashPath.replaceAll("\\", "/");
+  assert.equal(classifyPrompt(`[$pstack-for-codex:poteto-mode](${backslashPath}) continue`), "activate");
+  assert.equal(classifyPrompt(`[$pstack-for-codex:poteto-mode](${escapedBackslashPath}) continue`), "activate");
+  assert.equal(classifyPrompt(`[$poteto-mode](${forwardSlashPath}) continue`), "activate");
+});
+
 test("skill links reject casual, quoted, malformed, and wrong-skill invocations", () => {
   for (const prompt of [
     `please ${linkedInvocation}`,
@@ -75,6 +92,10 @@ test("skill links reject casual, quoted, malformed, and wrong-skill invocations"
     `[$pstack-for-codex:other](${skillPath})`,
     `[$pstack-for-codex:poteto-mode](https://example.com/skills/poteto-mode/SKILL.md)`,
     `[$pstack-for-codex:poteto-mode](skills/poteto-mode/SKILL.md)`,
+    `[$pstack-for-codex:poteto-mode](C:plugins\\skills\\poteto-mode\\SKILL.md)`,
+    `[$pstack-for-codex:poteto-mode](C:\\plugins\\..\\skills\\poteto-mode\\SKILL.md)`,
+    `[$pstack-for-codex:poteto-mode](C:\\plugins\\\\\\skills\\poteto-mode\\SKILL.md)`,
+    `[$pstack-for-codex:poteto-mode](\\\\server\\share\\skills\\poteto-mode\\SKILL.md)`,
     `[$pstack-for-codex:poteto-mode](/plugins/skills/other/SKILL.md)`,
     `[$pstack-for-codex:poteto-mode](/plugins/../skills/poteto-mode/SKILL.md)`,
     `[$pstack-for-codex:poteto-mode](/plugins/skills/poteto-mode/SKILL.md?x=1)`,
@@ -83,6 +104,54 @@ test("skill links reject casual, quoted, malformed, and wrong-skill invocations"
     `disable $pstack-for-codex:poteto-mode`,
     `disable ${linkedInvocation}`,
   ]) assert.equal(classifyPrompt(prompt), "inactive", prompt);
+});
+
+test("Windows hook launcher handles a plugin root containing spaces", async (t) => {
+  if (process.platform !== "win32") return t.skip("Windows command expansion is platform-specific");
+  const pluginRoot = await fs.mkdtemp(path.join(os.tmpdir(), "pstack plugin root "));
+  const pluginData = await fs.mkdtemp(path.join(os.tmpdir(), "pstack plugin data "));
+  t.after(() => fs.rm(pluginRoot, { recursive: true, force: true }));
+  t.after(() => fs.rm(pluginData, { recursive: true, force: true }));
+  const scriptDirectory = path.join(pluginRoot, "hooks", "scripts");
+  await fs.mkdir(scriptDirectory, { recursive: true });
+  await fs.copyFile(path.join(root, "hooks/scripts/poteto-mode-state.mjs"), path.join(scriptDirectory, "poteto-mode-state.mjs"));
+  const command = JSON.parse(await fs.readFile(path.join(root, "hooks/hooks.json"), "utf8"))
+    .hooks.UserPromptSubmit[0].hooks[0].commandWindows;
+  const result = spawnSync("cmd.exe", ["/d", "/c", command], {
+    cwd: root,
+    encoding: "utf8",
+    windowsVerbatimArguments: true,
+    env: { ...process.env, PLUGIN_ROOT: pluginRoot, PLUGIN_DATA: pluginData },
+    input: `${JSON.stringify({
+      hook_event_name: "UserPromptSubmit",
+      session_id: "thr_windows_launcher_test",
+      cwd: "C:\\workspace\\project",
+      prompt: "$poteto-mode verify launcher",
+    })}\n`,
+  });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Poteto sticky receipt/);
+});
+
+test("hook failures report a fixed diagnostic without exposing input or error details", async (t) => {
+  const pluginData = await fs.mkdtemp(path.join(os.tmpdir(), "pstack-hook-failure-"));
+  t.after(() => fs.rm(pluginData, { recursive: true, force: true }));
+  const blockedData = path.join(pluginData, "blocked");
+  await fs.writeFile(blockedData, "file blocks directory creation");
+  const result = spawnSync(process.execPath, [path.join(root, "hooks/scripts/poteto-mode-state.mjs")], {
+    encoding: "utf8",
+    env: { ...process.env, PLUGIN_DATA: blockedData },
+    input: `${JSON.stringify({
+      hook_event_name: "UserPromptSubmit",
+      session_id: "thr_sensitive_session",
+      cwd: "/workspace/private-project",
+      prompt: "$poteto-mode secret-prompt-value",
+    })}\n`,
+  });
+  assert.equal(result.status, 1);
+  assert.equal(result.stderr, "pstack-for-codex hook failed (ENOTDIR)\n");
+  assert.equal(result.stdout, "");
+  assert.doesNotMatch(result.stderr, /secret-prompt-value|thr_sensitive_session|private-project|blocked|EACCES|EPERM/);
 });
 
 test("linked activation persists through a later turn and exact opt-out", async (t) => {
@@ -141,6 +210,43 @@ test("concurrent activation writes remain atomic and task-local", async (t) => {
   }
   const files = await fs.readdir(path.join(pluginData, "poteto-mode/sessions"));
   assert.equal(files.some((name) => name.endsWith(".tmp")), false);
+});
+
+test("Windows rename retries stay bounded and preserve existing state", async (t) => {
+  if (process.platform !== "win32") return t.skip("Windows rename sharing errors are platform-specific");
+  const { pluginData, load } = await fixture(t);
+  const activation = await load("activate.json");
+  await handleHook(activation, { pluginData, now: 1_000 });
+  const targets = statePaths(pluginData, activation.session_id);
+  const originalState = await fs.readFile(targets.state, "utf8");
+  const originalRename = fs.rename;
+  const attempts = new Map();
+  try {
+    fs.rename = async (source, destination) => {
+      if (destination === targets.state) {
+        attempts.set(destination, (attempts.get(destination) ?? 0) + 1);
+        throw Object.assign(new Error("sharing violation"), { code: "EPERM" });
+      }
+      return originalRename(source, destination);
+    };
+    await assert.rejects(handleHook({ ...activation, prompt: "$poteto-mode retry" }, { pluginData, now: 2_000 }), { code: "EPERM" });
+    assert.equal(attempts.get(targets.state), 6);
+    assert.equal(await fs.readFile(targets.state, "utf8"), originalState);
+
+    attempts.clear();
+    fs.rename = async (source, destination) => {
+      if (destination === targets.state) {
+        attempts.set(destination, (attempts.get(destination) ?? 0) + 1);
+        throw Object.assign(new Error("disk full"), { code: "ENOSPC" });
+      }
+      return originalRename(source, destination);
+    };
+    await assert.rejects(handleHook({ ...activation, prompt: "$poteto-mode retry" }, { pluginData, now: 3_000 }), { code: "ENOSPC" });
+    assert.equal(attempts.get(targets.state), 1);
+    assert.equal(await fs.readFile(targets.state, "utf8"), originalState);
+  } finally {
+    fs.rename = originalRename;
+  }
 });
 
 test("explicit opt-out removes this session and its delegate context", async (t) => {

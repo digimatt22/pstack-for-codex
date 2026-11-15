@@ -35,9 +35,9 @@ A configured model is a request, not runtime evidence. Setup validates a `model`
 
 The parent request controls authority. Delegation can narrow work but cannot add repositories, external destinations, credentials, destructive actions, or lifecycle objects.
 
-Codex agents may share a filesystem. Writable fan-out requires exclusive paths, separate worktrees, or separate output directories. When safe isolation is unavailable, queue repository edits rather than having the coordinator write them. The parent integrates results and runs authoritative checks. A child report is evidence, not completion.
+Codex agents may share a filesystem. Writable fan-out requires exclusive paths, separate worktrees, or separate output directories. When parallel isolation is unavailable, reconcile active writers and continue optional work serially. Required execution isolation remains a gate. The parent integrates results and runs authoritative checks. A child report is evidence, not completion.
 
-Each workflow declares its fallback for missing agent capacity. `sequential-parent` applies only to work that does not write repository files; repository-writing lanes remain queued until an isolated worker is available. The workflow reports missing lanes instead of inventing coverage.
+Routine repository changes may run in the parent without worker dispatch or parallel architecture exploration. Substantial design questions receive scoped comparison and scrutiny; consequential security and infrastructure changes retain independent review and meaningful failure/rollback proof. Inheritance is the default model policy. Missing optional workers or preferred pairs use a declared fallback; required independence, capability, or model diversity remains a visible gate. See the [runtime contract](../skills/poteto-mode/references/codex-agent-runtime.md) for the decision criteria.
 
 ## Goals, heartbeats, and tasks
 

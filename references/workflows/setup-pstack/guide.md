@@ -17,7 +17,7 @@ Read `references/model-profile.md` before changing configuration. The portable p
 
 ## Model policy
 
-For repository work, request GPT-6 Luna with medium reasoning for every dispatched agent, including read-only lanes. Setup profile configuration is separate from dispatch: use another validated model only for independent model diversity or a specialized role, and record the reason. A profile that pins a conflicting model must not override the dispatch request; use a generic delegate or a compatible profile.
+Profiles inherit model and effort by default. Runtime selection follows the central contract: use validated overrides when justified and available, and do not block ordinary work on an optional model preference. Setup configuration does not prove a served model or grant dispatch authority.
 
 If a supported Codex model-list surface is observable, convert it to JSON records shaped like:
 
@@ -25,7 +25,7 @@ If a supported Codex model-list surface is observable, convert it to JSON record
 [{"slug":"gpt-5.6-sol","reasoning_efforts":["low","medium","high","xhigh","max","ultra"]}]
 ```
 
-Validate both values before writing them. If no supported model list is observable, do not guess or accept pasted entitlement claims as proof: omit both TOML fields, inherit the parent, and record `unverified-inheritance` with the requested pair in the receipt. A missing model or unsupported effort is a hard stop; do not silently select a substitute. Repository work remains queued until an appropriate worker can be dispatched.
+Validate both values before writing them. If no supported model list is observable, do not guess or accept pasted entitlement claims as proof: omit both TOML fields, inherit the parent, and record `unverified-inheritance` with the requested pair in the receipt. An explicitly requested missing model or unsupported effort stops that configuration write without changing profiles. It does not block unrelated repository work; use the runtime's declared fallback unless the pair is required for correctness.
 
 Profiles are a JSON object keyed by namespaced agent name:
 

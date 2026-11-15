@@ -71,7 +71,7 @@ test("clean Codex profile installs, validates, and tears down the complete plugi
   ]);
   await fs.cp(root, pluginSource, {
     recursive: true,
-    filter: (source) => !source.split(path.sep).some((part) => part === ".git" || part === "node_modules"),
+    filter: (source) => !path.relative(root, source).split(path.sep).some((part) => part === ".git" || part === "node_modules" || part === ".local"),
   });
   const sourceManifest = JSON.parse(await fs.readFile(path.join(pluginSource, ".codex-plugin/plugin.json"), "utf8"));
   const pluginId = `${sourceManifest.name}@pstack-for-codex-local`;
@@ -79,6 +79,9 @@ test("clean Codex profile installs, validates, and tears down the complete plugi
   const version = codex(["--version"], codexHome, false);
   assert.match(version, /^codex-cli \d+\.\d+\.\d+/);
   context.diagnostic(`installed smoke Codex: ${version}; runtime skill index: unavailable offline; models: unverified/inherited; live connectors: not exercised`);
+
+  const initial = codex(["plugin", "list", "--available", "--json"], codexHome);
+  assert.deepEqual(initial.installed, [], "The isolated profile must have no installed plugins before any mutation");
 
   const market = codex(["plugin", "marketplace", "add", pluginSource, "--json"], codexHome);
   assert.equal(market.marketplaceName, "pstack-for-codex-local");
@@ -91,6 +94,8 @@ test("clean Codex profile installs, validates, and tears down the complete plugi
   assert.equal(installation.version, sourceManifest.version);
   const installedRoot = installation.installedPath;
   assert.equal(path.isAbsolute(installedRoot), true);
+  const relativeInstalledPath = path.relative(codexHome, installedRoot);
+  assert.ok(relativeInstalledPath && relativeInstalledPath !== ".." && !relativeInstalledPath.startsWith(`..${path.sep}`) && !path.isAbsolute(relativeInstalledPath), "Installed artifact must remain inside the temporary CODEX_HOME");
   assert.equal(await pathExists(installedRoot), true);
   assert.ok((await filesBelow(installedRoot)).length > 0);
   assert.ok(await pathExists(path.join(installedRoot, ".codex-plugin/plugin.json")));

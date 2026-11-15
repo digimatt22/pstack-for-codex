@@ -10,7 +10,7 @@
 6. Run `node pstack/skills/poteto-mode/scripts/check-plan.mjs <plan.md>` and fix every line it prints (the **encode-lessons-in-structure** principle skill). It enforces the skeleton's shape, the verification rule in every verification block, and the punctuation rules.
 7. Hand back. Post the plan path and the script's output, then stop. Execution starts on the operator's explicit go, under the execution playbook the plan names.
 
-**Verification.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked (the **prove-it-works** principle skill). That sentence is the verification rule. Every verification block opens with it. The live block is mandatory. Ten lanes at GPT-6 Luna with medium reasoning at the PR head drive the real surface through its control skill, per the **swarm** skill. Use another validated model only when independent verification requires model diversity or the control role requires a specialized model; record the reason. Each lane is one box with a concrete scenario, the screenshot it saves, and its pass predicate. The perf block names the metric, the probe, the trunk baseline measured first, and the rule with the number that fails. A PR that changes an interaction is review-gated. The operator reviews it in chat with screenshots and a video before merge. A PR that changes no interaction writes `**Review gate.** None. <PR id> is not review-gated.` and no boxes under it.
+**Verification.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked (the **prove-it-works** principle skill). That sentence is the verification rule for this formal multi-PR plan. Every verification block opens with it. The live block is mandatory. Add `Verification scope.` followed by the risk, scenarios, and reason for the chosen lane count. Use as many distinct scenarios as the changed behavior and failure modes require, with models and optional parallelism selected under the runtime contract. Each lane is one box with a concrete scenario, the screenshot it saves, and its pass predicate. Independent security scrutiny remains mandatory for consequential changes. The perf block names the metric, the probe, the trunk baseline measured first, and the rule with the number that fails. A PR that changes an interaction is review-gated. The operator reviews it in chat with screenshots and a video before merge. A PR that changes no interaction writes `**Review gate.** None. <PR id> is not review-gated.` and no boxes under it.
 
 **Control skill.** Detect an installed control capability for each surface. A PR that touches two surfaces gets lanes on both. A surface with no live-control capability is a release risk in Appendix C and the live proof fails closed rather than pretending code inspection drove it.
 
@@ -58,13 +58,13 @@ Tests alone are not sufficient verification. A PR is verified only when its unit
 
 - [ ] Open the PR ready, never draft, with `gh pr create` and `draft: false`. For dependent work, pass the immediate parent branch with `--base` and name the dependency in the description.
 - [ ] Run the repo's lint and typecheck once before the PR-facing push. Push with hooks on.
-- [ ] Run `$deslop` before each commit and `$no-comments` before review.
+- [ ] Clean up the diff before commit and select scoped reviews under the runtime contract. Preserve required independent scrutiny.
 - [ ] Triage every Bugbot and security-reviewer comment per `../references/bugbot-triage.md`.
 - [ ] Rebase onto current trunk before babysit and again before the merge-ready report.
 
 ### Verdict and merge, for every PR
 
-- [ ] At the merge-ready head SHA, run the swarm per `pstack/skills1/SKILL.md`. One gates lane. The ten live lanes from the PR's **Verify, live** block. The perf lane from its **Verify, perf** block. One audit lane that reads the diff and the receipts and distrusts the PR body.
+- [ ] At the merge-ready head SHA, run the scoped verification under the runtime contract. One gates lane. The live scenarios from the PR's **Verify, live** block. The perf lane from its **Verify, perf** block. One independent audit lane that reads the diff and the receipts and distrusts the PR body.
 - [ ] Clean only when every lane is `PASS`. Findings go back to the owner. A new head gets a fresh swarm and a fresh verdict.
 - [ ] <The merge or append rule from the execution playbook, with the patch-id rule from `playbooks/shipping.md`.>
 
@@ -99,18 +99,9 @@ Each live lane runs in its own isolated environment at the PR head through a det
 
 - [ ] <Test file and the case it gains.> Run `<command>`.
 
-**Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Ten lanes at GPT-6 Luna with medium reasoning at the PR head, per the boot recipe. Use another validated model only for independent model diversity or a required specialized control role, and record the reason.
+**Verify, live.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked. Verification scope. <Risk, distinct scenarios, and why this lane count is sufficient. Follow the runtime's model and independence rules.>
 
 - [ ] Lane 1. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 2. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 3. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 4. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 5. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 6. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 7. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 8. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 9. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
-- [ ] Lane 10. <Scenario.> Save `<slug>.png`. Pass when <predicate>.
 
 **Verify, perf.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked.
 

@@ -8,14 +8,23 @@ cases:
     expected: request cancellation, inspect partial files, and reconcile before retry
     proof: partial results are labeled and never reported as complete
   - id: no-subagents
-    expected: run sequentially in the parent when independence is not required
-    proof: no promised parallelism appears in the result
+    expected: run repository edits sequentially in the parent when independence or execution isolation is not required
+    proof: no promised parallelism appears in the result and the requested local behavior is verified
   - id: no-custom-profile
     expected: use a generic agent with the portable persona prompt
     proof: model identity is inherited or labeled unverified
   - id: no-capacity
     expected: queue bounded work or continue sequentially
     proof: no work item is silently dropped
+  - id: unavailable-optional-model
+    expected: declare inheritance or another validated available pair and proceed
+    proof: no inventory delay or worker-model preference blocks a bounded task
+  - id: unavailable-required-verifier
+    expected: continue safe preparation but keep the consequential verdict or transition gated
+    proof: parent self-review is not described as independent proof
+  - id: unavailable-required-model-diversity
+    expected: keep the release verdict blocked when the required distinct served families cannot be established
+    proof: inherited readers are not claimed as model diversity
   - id: interrupted-child
     expected: inspect partial output before one bounded retry with a fresh consolidated brief
     proof: repeated interruption returns a partial result or visible blocker

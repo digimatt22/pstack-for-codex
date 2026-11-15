@@ -1,6 +1,6 @@
 # Design before implementation
 
-Use design work when a change crosses boundaries or has several credible shapes. Skip it for a mechanical edit whose structure is already fixed.
+Use design work for consequential ownership boundaries or several credible shapes with material tradeoffs. Skip parallel exploration for a bounded edit whose structure is already fixed.
 
 ![Several robots draft separate bridge designs while a reviewer compares them.](./images/design.jpg)
 
@@ -18,7 +18,7 @@ The internal `architect` guide grounds the request in current callers and types.
 $poteto-mode use the internal arena guide to produce three parser designs from this brief. Keep each candidate isolated and judge them against migration cost and failure handling.
 ```
 
-The candidates need independent output directories or worktrees. The parent reads and selects a base, then assigns any repository integration edits to a worker and verifies the result. A sequential fallback applies only to disposable candidates outside repository files; repository-writing candidates remain queued when independent agents are unavailable.
+Concurrent candidates need independent output directories or worktrees. The parent selects a base, integrates it directly or delegates bounded edits, and verifies the result. Optional parallel exploration may fall back to a disclosed sequential comparison, including repository edits. An explicitly required independent competition or review remains gated when that capability is unavailable.
 
 ## Cover separate slices with the internal `swarm` guide
 

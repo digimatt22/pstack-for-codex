@@ -11,9 +11,11 @@ export const DISABLE_PHRASE = "disable $poteto-mode";
 export const CLEANUP_CONCURRENCY = 16;
 
 const ACTIVATION = /^\s*\$(?:pstack-for-codex:)?poteto-mode(?:\s|$)/u;
-const LINKED_ACTIVATION = /^\s*\[\$(?:pstack-for-codex:)?poteto-mode\]\((\/[^()\\\x00-\x1f]+\/skills\/poteto-mode\/SKILL\.md)\)(?:\s|$)/u;
+const LINKED_ACTIVATION = /^\s*\[\$(?:pstack-for-codex:)?poteto-mode\]\(([^()\x00-\x1f]+[\\/]skills[\\/]poteto-mode[\\/]SKILL\.md)\)(?:\s|$)/u;
 const DISABLE = /^\s*disable \$poteto-mode[.!]?\s*$/iu;
 const MAX_SESSION_ID_LENGTH = 512;
+const SAFE_ERROR_CODES = new Set(["EACCES", "EEXIST", "EINVAL", "EIO", "ENFILE", "EMFILE", "ENAMETOOLONG", "ENODEV", "ENOENT", "ENOMEM", "ENOSPC", "ENOTDIR", "EPERM", "EROFS"]);
+const WINDOWS_RENAME_RETRY_DELAYS_MS = [10, 20, 40, 80, 160];
 
 export function hashValue(value) {
   return createHash("sha256").update(value).digest("hex");
@@ -38,8 +40,17 @@ export function classifyPrompt(prompt) {
   if (DISABLE.test(prompt)) return "disable";
   if (ACTIVATION.test(prompt)) return "activate";
   const skillPath = LINKED_ACTIVATION.exec(prompt)?.[1];
-  if (skillPath && path.posix.normalize(skillPath) === skillPath) return "activate";
+  if (skillPath && isNormalizedAbsoluteSkillPath(skillPath)) return "activate";
   return "inactive";
+}
+
+function isNormalizedAbsoluteSkillPath(skillPath) {
+  if (skillPath.startsWith("/") && !skillPath.startsWith("//")) {
+    return !skillPath.includes("\\") && path.posix.normalize(skillPath) === skillPath;
+  }
+  if (!/^[A-Za-z]:[\\/]/u.test(skillPath)) return false;
+  const windowsPath = skillPath.replaceAll("\\\\", "\\").replaceAll("/", "\\");
+  return path.win32.isAbsolute(windowsPath) && path.win32.normalize(windowsPath) === windowsPath;
 }
 
 export function statePaths(pluginData, sessionId) {
@@ -57,7 +68,22 @@ async function atomicWrite(target, value) {
   await fs.mkdir(path.dirname(target), { recursive: true, mode: 0o700 });
   const temporary = `${target}.${process.pid}.${randomUUID()}.tmp`;
   await fs.writeFile(temporary, `${JSON.stringify(value)}\n`, { mode: 0o600 });
-  await fs.rename(temporary, target);
+  let retries = 0;
+  while (true) {
+    try {
+      await fs.rename(temporary, target);
+      return;
+    } catch (error) {
+      const retryDelay = WINDOWS_RENAME_RETRY_DELAYS_MS[retries];
+      if (
+        process.platform !== "win32" ||
+        !["EACCES", "EPERM"].includes(error?.code) ||
+        retryDelay === undefined
+      ) throw error;
+      retries += 1;
+      await new Promise((resolve) => setTimeout(resolve, retryDelay));
+    }
+  }
 }
 
 async function writeStateAndReceipt(targets, state, receipt) {
@@ -272,7 +298,9 @@ async function main() {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
-  main().catch(() => {
+  main().catch((error) => {
+    const code = SAFE_ERROR_CODES.has(error?.code) ? error.code : "unknown-error";
+    process.stderr.write(`pstack-for-codex hook failed (${code})\n`);
     process.exitCode = 1;
   });
 }

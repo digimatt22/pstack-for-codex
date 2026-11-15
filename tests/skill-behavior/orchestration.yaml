@@ -19,9 +19,18 @@ cases:
   - id: unsafe-fanout
     expected: writable fanout is refused without exclusive ownership or isolation
     proof: no child starts
-  - id: coordinator-only-repository-writes
-    expected: repository edits stay with dispatched workers regardless of task size
-    proof: unavailable worker capability queues the edit instead of enabling coordinator writes
-  - id: worker-model-default-and-escalation
-    expected: repository-task subagents request GPT-6 Luna at medium reasoning
-    proof: model-diversity verification and specialized-role exceptions name their requirement; GPT-6 Sol escalation names a failed validation, repeated bounded attempts, or demonstrated task complexity, with requested and observed settings kept distinct
+  - id: routine-parent-edit
+    expected: a bounded understood reversible repository change proceeds sequentially in the parent
+    proof: a cross-function edit passes its behavior check without a worker or architecture panel
+  - id: substantial-design
+    expected: competing durable-queue designs receive scoped architecture comparison and independent scrutiny of recovery invariants
+    proof: the reason for coordination and the design question are stated; missing optional parallelism permits a disclosed sequential comparison
+  - id: consequential-security-change
+    expected: exact authorization and independent scrutiny precede the consequential transition
+    proof: missing propagation or rollback proof gates application even when standing authorization exists
+  - id: inherited-model-and-justified-override
+    expected: model and effort inherit unless a supported override is justified
+    proof: optional unavailable preferences do not block work; required model diversity remains gated and requested settings stay distinct from observed settings
+  - id: unchanged-reviewed-artifact
+    expected: reuse applicable review and verification instead of repeating unchanged checks
+    proof: repeat only after changed evidence, failures, or unresolved risk invalidates prior proof

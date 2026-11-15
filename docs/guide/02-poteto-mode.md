@@ -36,7 +36,7 @@ disable $poteto-mode
 
 ## Isolate parallel writers
 
-Codex agents can share a filesystem. Before writes, give the worker exclusive files, a separate worktree, or a separate output directory. If no safe worker path is available, keep repository edits queued; the coordinator does not take over those edits.
+Codex agents can share a filesystem. Before concurrent writes, give workers exclusive files, separate worktrees, or separate output directories. Without parallel isolation, reconcile active writers and run optional work serially. Bounded edits may stay in the parent. Required isolation or independent scrutiny remains a gate.
 
 ```text
 $poteto-mode compare two parser designs. Put each disposable candidate in its own output directory. Do not edit production code.

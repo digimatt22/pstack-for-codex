@@ -15,7 +15,7 @@ test("skill resources resolve from an installed cache-like copy", async (context
   const installed = path.join(temporary, "pstack-for-codex", "0.3.1");
   await fs.cp(root, installed, {
     recursive: true,
-    filter: (source) => !source.split(path.sep).includes(".git"),
+    filter: (source) => !path.relative(root, source).split(path.sep).some((part) => part === ".git" || part === "node_modules" || part === ".local"),
   });
 
   const report = await validatePlugin(installed, { probeBun: true });
@@ -23,6 +23,8 @@ test("skill resources resolve from an installed cache-like copy", async (context
   assert.equal(report.inventory.discovered, EXPECTED_SKILL_COUNT);
   assert.match(report.capabilities.bun.status, /^(available|unavailable)$/);
   assert.equal(typeof report.capabilities.bun.detail, "string");
+  await assert.rejects(fs.stat(path.join(installed, ".local")), { code: "ENOENT" });
+  await assert.rejects(fs.stat(path.join(installed, "skills/poteto-mode/scripts/node_modules")), { code: "ENOENT" });
 });
 
 test("a missing installed resource fails with its owning skill", async (context) => {
@@ -30,7 +32,7 @@ test("a missing installed resource fails with its owning skill", async (context)
   context.after(() => fs.rm(temporary, { recursive: true, force: true }));
   await fs.cp(root, temporary, {
     recursive: true,
-    filter: (source) => !source.split(path.sep).includes(".git"),
+    filter: (source) => !path.relative(root, source).split(path.sep).some((part) => part === ".git" || part === "node_modules" || part === ".local"),
   });
   await fs.rm(path.join(temporary, "references/workflows/architect/references/design-red-flags.md"));
 

@@ -1,5 +1,7 @@
 # pstack for Codex
 
+See the [0.3.2 proportional orchestration notes](docs/proportional-orchestration.md) for behavior, validation, and remaining deployment limits.
+
 `pstack-for-codex` is a Codex-native derivative of [pstack](https://github.com/cursor/plugins/tree/main/pstack). It exposes four lightweight entry skills. Narrower workflows and principles load as references only when a core skill routes to them.
 
 Use `$poteto-mode` for a substantial engineering task. It selects a playbook, records the work as verifiable steps, and invokes narrower skills when the steps need them. The parent task keeps authority for integration, external writes, commits, pushes, and the final result.

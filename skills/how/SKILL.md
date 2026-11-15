@@ -64,12 +64,12 @@ Then proceed to Step 3.
 
 ### Step 2b. Direct Explain (simple questions)
 
-Spawn a single subagent that explores and explains in one pass:
+Explore and explain directly in the parent for a simple question. Read `references/explainer-prompt.md` for the communication style and adapt the output to the question. Use a single explainer subagent only when a bounded handoff provides a concrete context or ownership benefit:
 
 - Role: configured how-explainer profile or a generic agent with the explainer prompt.
 - Access: read-only. If no agent is available, explain sequentially in the parent.
 
-The agent does its own exploration (Glob, Grep, Read) and writes the explanation directly. Read `references/explainer-prompt.md` for the communication style and output format. Same structure, just no explorer findings as input.
+If delegated, the agent does its own exploration (Glob, Grep, Read) and writes the explanation directly, with no explorer findings as input.
 
 Proceed to Step 4.
 

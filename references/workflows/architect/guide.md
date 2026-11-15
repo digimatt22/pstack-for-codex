@@ -4,7 +4,7 @@
 
 Delegation and optional capabilities follow the [central Codex contract](../../../skills/poteto-mode/references/codex-agent-runtime.md).
 
-Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
+Use this workflow for a material choice between designs or a consequential ownership boundary. State that question first. A routine change with an understood shape can use a short local sketch and proceed without this workflow. Sketch types, function signatures, class shapes, and module boundaries before filling in code. If implementation proves the sketch wrong, redesign.
 
 ## Start
 
@@ -26,17 +26,17 @@ Skip Phase A only when the work is genuinely greenfield with no surrounding syst
 
 ## Phase B: Sketch
 
-Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt. Each candidate produces a design package shaped per `references/rationale-template.md`: the caller's usage written first, then the type sketch, function signatures, module map, and prose rationale derived from it.
+Choose the smallest comparison that resolves the stated question. A consequential boundary with one established design may need only a sketch and targeted independent review. For genuinely competing designs, compare at least two structurally distinct candidates. Use **arena** when independent parallel candidates add useful evidence; otherwise sketch alternatives sequentially and disclose that they are not independent.
 
-Use your configured architect runners (defaults the configured judgment profile, the configured instruction-following profile, the configured fast profile, an entitled alternate-family judgment profile).
+For parallel candidates, pass `references/runner-prompt.md` and the Phase A grounding artifacts. Each produces a design package shaped per `references/rationale-template.md`: caller usage, type sketch, signatures, module map, and rationale. Use available compatible profiles or inheritance under the runtime model policy. Multiple readers are not proof of different served models.
 
-Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
+If optional workers or preferred models are missing, perform the comparison sequentially. When independence or model diversity is an explicit acceptance requirement, report that dependency and keep the consequential verdict gated. Never label a parent comparison as an independent panel.
 
 Screen every candidate against [`references/design-red-flags.md`](references/design-red-flags.md) before synthesis. Reject or revise shallow modules, information leakage, temporal decomposition, and pass-through methods.
 
 Compare viable candidates on interface depth. Prefer the design that hides more complexity behind a smaller, simpler public surface. A rich interface can keep call chains short by concentrating capability instead of scattering it across layers.
 
-Arena returns one synthesized design package. The synthesis decision populates the rationale's "Synthesis decision" section.
+Return one chosen design package. Record the comparison, scrutiny performed, and any missing required lane in the rationale's "Synthesis decision" section.
 
 ## Phase C: Agree (opt-in)
 
